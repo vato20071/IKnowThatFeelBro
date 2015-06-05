@@ -1,12 +1,13 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Room {
 
-	private ArrayList<String> members;
-	private ArrayList<Message> chat;
-	private ArrayList<String> invitedUsers;
+	private List<String> members;
+	private List<Message> chat;
+	private List<String> invitedUsers;
 	private String roomName;
 	private int roomID;
 	
@@ -43,8 +44,8 @@ public class Room {
 	public void addMessage(Message msg) {
 		chat.add(msg);
 	}
-	
-	public ArrayList<Message> getMessageList() {
+
+	public List<Message> getMessageList() {
 		return chat;
 	}
 	
@@ -52,7 +53,7 @@ public class Room {
 		invitedUsers.add(user);
 	}
 	
-	public ArrayList<String> getInvitedList() {
+	public List<String> getInvitedList() {
 		return invitedUsers;
 	}
 	

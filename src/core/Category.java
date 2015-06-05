@@ -1,12 +1,13 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Category {
 
 	private int ID;
 	private String name;
-	private ArrayList<Room> roomList;
+	private List<Room> roomList;
 	
 	public Category() {
 		roomList = new ArrayList<>();
@@ -23,7 +24,7 @@ public class Category {
 		roomList.remove(room);
 	}
 	
-	public ArrayList<Room> getRoomList() {
+	public List<Room> getRoomList() {
 		return roomList;
 	}
 	

@@ -1,5 +1,7 @@
 package core;
 
+import java.util.List;
+
 public interface DataBaseInterface {
 
 	public void insertDataIntoAccount(Account user);
@@ -11,5 +13,6 @@ public interface DataBaseInterface {
 	public Category getCategoryByID(int ID);
 	public Category getCategoryByName(String name);
 	public boolean getFriendShip(Account user1, Account user2);
-	
+	public List<String> getFriendsByCategory(String userName, String categoryName);
+	public List<String> getCategoryList(String userName);
 }

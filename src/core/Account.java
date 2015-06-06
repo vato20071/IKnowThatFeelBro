@@ -1,14 +1,14 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Account {
 	
 	private int ID, coeffCount, status;
 	private String userName, password, mail, facebook;
 	private double coeffValue;
-	private HashMap<String, ArrayList<String> > friendMap;
+	private HashMap<String, List<String> > friendMap;
 	private DataBase base;
 	
 	public Account() {
@@ -17,7 +17,7 @@ public class Account {
 	
 	public void addFriendShip(String category, String userName) {
 		base.addFriendShip(this.userName, userName, category);
-		ArrayList<String> friends = friendMap.get(category);
+		List<String> friends = friendMap.get(category);
 		if (!friends.contains(userName)) {
 			friends.add(userName);
 		}

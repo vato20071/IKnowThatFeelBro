@@ -4,13 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
 public class DataBase implements DataBaseInterface{
 
+	public static final int MAX_CONNECTIONS = 50;
+	private static final int MAX_WAIT_TIME = 60000;
 	BasicDataSource ds = new BasicDataSource();
-	
+
 	public DataBase() {
 		ds = new BasicDataSource();
 		initConnection(ds);
@@ -25,6 +29,8 @@ public class DataBase implements DataBaseInterface{
         ds.setUrl("jdbc:mysql://localhost:3306/iknowthatfeelbro?characterEncoding=UTF8");
         ds.setUsername("root");
         ds.setPassword("vatodato");
+        ds.setMaxTotal(MAX_CONNECTIONS);
+        ds.setMaxConnLifetimeMillis(MAX_WAIT_TIME);
 	}
 	
 	@Override
@@ -192,6 +198,49 @@ public class DataBase implements DataBaseInterface{
 			System.out.println("Exception occured when obtaining friendship status from database");
 		}
 		return false;
+	}
+
+	@Override
+	public List<String> getFriendsByCategory(String userName, String categoryName) {
+		Account user = getAccountByName(userName);
+		Category cat = getCategoryByName(categoryName);
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("select user2_ID from friendship where user1_ID = ? and cat_ID = ?")) {
+				stmt.setInt(1, user.getID());
+				stmt.setInt(2, cat.getID());
+				List<String> list = new ArrayList<>();
+				try (ResultSet set = stmt.executeQuery()) {
+					while (set.next()) {
+						list.add(getAccountByID(set.getInt("user2_ID")).getUserName());
+					}
+				}
+				return list;
+			}
+		} catch (SQLException e) {
+			System.out.println("Exception occured when obtaining friend list with category");
+		}
+		return null;
+	}
+	
+	@Override
+	public List<String> getCategoryList(String userName) {
+		Account user = getAccountByName(userName);
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("select cat_ID from friendship where user1_ID = ?")) {
+				stmt.setInt(1, user.getID());
+				List<String> list = new ArrayList<>();
+				try (ResultSet set = stmt.executeQuery()) {
+					while (set.next()) {
+						list.add(getCategoryByID(set.getInt("cat_ID")).getName());
+					}
+				}
+				return list;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

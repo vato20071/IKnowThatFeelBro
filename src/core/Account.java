@@ -13,6 +13,8 @@ public class Account {
 	
 	public Account() {
 		friendMap = new HashMap<>();
+		mail = "";
+		facebook = "";
 	}
 	
 	public void addFriendShip(String category, String userName) {

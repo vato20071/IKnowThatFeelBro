@@ -14,14 +14,26 @@
 		<script src="js/init.js"></script>
 		<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
 		<script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="js/loadJS.js"></script>
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+		<script src="https://apis.google.com/js/client:platform.js" async defer></script>
+		<meta name="google-signin-clientid"
+			content="781668877526-hv8h62fo4jv5vtctdp4au87foc259s1f.apps.googleusercontent.com" />
+		<meta name="google-signin-scope"
+			content="https://www.googleapis.com/auth/plus.login" />
+		<meta name="google-signin-requestvisibleactions"
+			content="http://schema.org/AddAction" />
+		<meta name="google-signin-cookiepolicy" content="single_host_origin" />
+		<script
+			src="https://apis.google.com/js/client:platform.js?onload=render" async
+			defer></script>
+		<script>
 		
-		<noscript>
-			<link rel="stylesheet" href="css/skel.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-xlarge.css" />
-		</noscript>
+		</script>
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="css/skel.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/style-xlarge.css" />
 		<link type="text/css" rel="stylesheet" href="css/PopUpStyle.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
@@ -64,11 +76,12 @@
 						<!-- Social Login -->
 						<div class="social_login">
 							<div class="">
-								<a href="#" class="social_box fb">
-									<div class="fb-login-button" data-max-rows="2" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>		
+								<a href="#" class="social_box fb" onclick="return fbAuth();">
+									<span class="icon"><i class="fa fa-facebook"></i></span>
+									<span class="icon_title">Connect with Facebook</span>
 								</a>
 			
-								<a href="#" class="social_box google">
+								<a href="#" class="social_box google" id="signinButton">
 									<span class="icon"><i class="fa fa-google-plus"></i></span>
 									<span class="icon_title">Connect with Google</span>
 								</a>
@@ -102,12 +115,12 @@
 						<!-- Register Form -->
 						<div class="user_register">
 							<form>
-								<label>Full Name</label>
-								<input type="text" />
+								<label>User Name</label>
+								<input type="text" id="username"/>
 								<br />
 			
-								<label>Email Address</label>
-								<input type="email" />
+								<label>Nick Name</label>
+								<input type="email" id="nickname"/>
 								<br />
 			
 								<label>Password</label>
@@ -121,7 +134,7 @@
 			
 								<div class="action_btns">
 									<div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-									<div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
+									<div class="one_half last"><a href="NormalSignUp" class="btn btn_red">Register</a></div>
 								</div>
 							</form>
 						</div>
@@ -132,32 +145,6 @@
 			<script type="text/javascript">
 				$("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
 			
-				$(function(){
-					// Calling Login Form
-					$("#login_form").click(function(){
-						$(".social_login").hide();
-						$(".user_login").show();
-						return false;
-					});
-			
-					// Calling Register Form
-					$("#register_form").click(function(){
-						$(".social_login").hide();
-						$(".user_register").show();
-						$(".header_title").text('Register');
-						return false;
-					});
-			
-					// Going back to Social Forms
-					$(".back_btn").click(function(){
-						$(".user_login").hide();
-						$(".user_register").hide();
-						$(".social_login").show();
-						$(".header_title").text('Login');
-						return false;
-					});
-			
-				})
 			</script>
 			</section>
 

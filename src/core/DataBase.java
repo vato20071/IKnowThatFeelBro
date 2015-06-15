@@ -45,15 +45,16 @@ public class DataBase implements DataBaseInterface{
 
 	private void addAccount(Connection conn, Account user) throws SQLException {
 		try (PreparedStatement stmt = conn.prepareStatement("insert into account "
-				+ "(user_name, password, mail, fb, coeff_value, coeff_numb, status) " 
-				+ "values (?, ?, ?, ?, ?, ?, ?)")) {
+				+ "(user_name, password, nickname, mail, fb, coeff_value, coeff_numb, status) " 
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?)")) {
 			stmt.setString(1, user.getUserName());
 			stmt.setString(2, user.getPassword());
-			stmt.setString(3, user.getMail());
-			stmt.setString(4, user.getFacebook());
-			stmt.setDouble(5, user.getCoeffValue());
-			stmt.setInt(6, user.getCoeffCount());
-			stmt.setString(7, user.getStatus()+"");
+			stmt.setString(3, user.getNickName());
+			stmt.setString(4, user.getMail());
+			stmt.setString(5, user.getFacebook());
+			stmt.setDouble(6, user.getCoeffValue());
+			stmt.setInt(7, user.getCoeffCount());
+			stmt.setString(8, user.getStatus()+"");
 			stmt.execute();
 		} 
 	}
@@ -116,6 +117,7 @@ public class DataBase implements DataBaseInterface{
 				acc.setID(set.getInt("ID"));
 				acc.setUserName(set.getString("user_name"));
 				acc.setPassword(set.getString("password"));
+				acc.setNickName(set.getString("nickname"));
 				acc.setMail(set.getString("mail"));
 				acc.setFacebook(set.getString("fb"));
 				acc.setCoeffValue(set.getDouble("coeff_value"));

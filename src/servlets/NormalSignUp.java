@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -33,39 +32,62 @@ public class NormalSignUp extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DataBase dt=new DataBase();
-		String name=request.getParameter("username");
-		if(dt.getAccountByName(name)!=null){
-		//TODO
-		}else{
-		String nick=request.getParameter("nickname");
-		String password=request.getParameter("reg_pass");
-		MessageDigest m;
-		String pass="";
-		try {
-			m = MessageDigest.getInstance("SHA");
-			pass=m.digest(password.getBytes()).toString();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+		DataBase dt = new DataBase();
+		String name = request.getParameter("reg_username");
+		System.out.println(name);
+		if (dt.getAccountByName(name) != null) {
+			// TODO
+		} else {
+			String nick = request.getParameter("reg_nickname");
+			String password = request.getParameter("reg_pass");
+			MessageDigest m;
+			String pass = "";
+			try {
+				m = MessageDigest.getInstance("SHA");
+				pass = m.digest(password.getBytes()).toString();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			Account newOne = new Account();
+			newOne.setUserName(name);
+			newOne.setNickName(nick);
+			newOne.setPassword(pass);
+			dt.insertDataIntoAccount(newOne);
+			request.getSession().setAttribute("account", newOne);
+			response.sendRedirect("generic.jsp");
+
 		}
-		Account newOne=new Account();
-		newOne.setUserName(name);
-		newOne.setNickName(nick);
-		newOne.setPassword(pass);
-		dt.insertDataIntoAccount(newOne);
-		request.getSession().setAttribute("account", newOne);
-		response.sendRedirect("generic.jsp");
-		
-		
-		}
-		
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		DataBase dt = new DataBase();
+		String name = request.getParameter("reg_username");
+		if (dt.getAccountByName(name) != null) {
+			// TODO
+		} else {
+			String nick = request.getParameter("reg_nickname");
+			String password = request.getParameter("reg_pass");
+			if (password == null) password = new String(name);
+			MessageDigest m;
+			String pass = "";
+			try {
+				m = MessageDigest.getInstance("SHA");
+				pass = m.digest(password.getBytes()).toString();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			Account newOne = new Account();
+			newOne.setUserName(name);
+			newOne.setNickName(nick);
+			newOne.setPassword(pass);
+			dt.insertDataIntoAccount(newOne);
+			request.getSession().setAttribute("account", newOne);
+			response.sendRedirect("generic.jsp");
+		}
 	}
 
 }

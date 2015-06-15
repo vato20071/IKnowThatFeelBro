@@ -17,6 +17,10 @@ public class Account {
 		facebook = "";
 	}
 	
+	public void test() {
+		System.out.println("HEre guys ");
+	}
+	
 	public void addFriendShip(String category, String userName) {
 		base.addFriendShip(this.userName, userName, category);
 		List<String> friends = friendMap.get(category);

@@ -37,17 +37,14 @@ function signinCallback(authResult) {
 				'userId' : 'me'
 			});
 			request.execute(function(resp) {
-				document.getElementById('username').value = "g" + resp.id;
-				document.getElementById('nickname').value = resp.displayName;
-				$.post('FBGP', function(data) {
-	                alert(data);
-	            });
+				$.post('NormalSignUp', {reg_username: "g" + resp.id, reg_nickname: resp.displayName}, function(returnData) {
+				});
 			});
 		});
 	} else {
 		// Update the app to reflect a signed out user
 		// Possible error values:
-		// "user_signed_out" - User is signed-out
+		// 'user_signed_out" - User is signed-out
 		// "access_denied" - User denied access to your app
 		// "immediate_failed" - Could not automatically log in the user
 		alert('User canceled login or did not fully authorize the app.');
@@ -57,11 +54,11 @@ function fbAuth() {
     FB.login(function(response) {
       if (response.authResponse) {
         FB.api('/me', function(me) {
+        	document.createAttribute('username');
         	document.getElementById('username').value = "f" + me.id;
         	document.getElementById('nickname').value = me.name;
-        	$.post('FBGP', function(data) {
-                alert(data);
-            });
+        	$.post('NormalSignUp', {reg_username: "f" + me.id, reg_nickname: me.name}, function(returnData) {
+			});
         });
       } else {
         alert('User canceled login or did not fully authorize the app.');

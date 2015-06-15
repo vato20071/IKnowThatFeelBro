@@ -6,7 +6,7 @@ import java.util.List;
 public class Account {
 	
 	private int ID, coeffCount, status;
-	private String userName, password, mail, facebook;
+	private String userName, password, mail, facebook, nickName;
 	private double coeffValue;
 	private HashMap<String, List<String> > friendMap;
 	private DataBase base;
@@ -24,6 +24,14 @@ public class Account {
 		friendMap.put(category, friends);
 	}
 	
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
 	public void setDataBase(DataBase base) {
 		this.base = base;
 	}

@@ -3,12 +3,12 @@ create database if not exists IKnowThatFeelBro;
 
 use IKnowThatFeelBro;
 
-
 create table if not exists `account`
 (
 	`ID` int not null auto_increment primary key,
 	`user_name` varchar(100) not null,
 	`password` varchar(200) not null,
+	`nickname` varchar(100) not null,
 	`mail` varchar(150) default null,
 	`fb` varchar(150) default null,
 	`coeff_value` decimal(3, 2) default 0,

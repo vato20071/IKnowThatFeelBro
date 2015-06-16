@@ -44,7 +44,7 @@ function signinCallback(authResult) {
 				'userId' : 'me'
 			});
 			request.execute(function(resp) {
-				$.post('NormalSignUp', {reg_username: "g" + resp.id, reg_nickname: resp.displayName}, function(returnData) {
+				$.post('FaceGoogleAuthentication', {reg_username: "g" + resp.id, reg_nickname: resp.displayName}, function(returnData) {
 				});
 			});
 		});
@@ -57,11 +57,15 @@ function signinCallback(authResult) {
 		alert('User canceled login or did not fully authorize the app.');
 	}
 }
+
+
+
+
 function fbAuth() {
     FB.login(function(response) {
       if (response.authResponse) {
         FB.api('/me', function(me) {
-        	$.post('NormalSignUp', {reg_username: "f" + me.id, reg_nickname: me.name}, function(returnData) {
+        	$.post('FaceGoogleAuthentication', {reg_username: "f" + me.id, reg_nickname: me.name}, function(returnData) {
 			});
         });
       } else {

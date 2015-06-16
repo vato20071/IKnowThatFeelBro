@@ -44,17 +44,29 @@ public class FaceGoogleAuthentication extends HttpServlet {
 		execute(request, response);
 	}
 
-	private void execute(HttpServletRequest request, HttpServletResponse response){
+	private void execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
 		String name = request.getParameter("reg_username");
 		DataBase db = serv.getDB();
 		if (db.getAccountByName(name) == null) {
+			String nick = request.getParameter("reg_nickname");
+			String password = request.getParameter("reg_pass");
+			if (password == null) password = new String(name);
+			MessageDigest m;
+			String pass = "";
 			try {
-				response.sendRedirect("/NormalSignUp");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				m = MessageDigest.getInstance("SHA");
+				pass = m.digest(password.getBytes()).toString();
+			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
+			Account newOne = new Account();
+			newOne.setUserName(name);
+			newOne.setNickName(nick);
+			newOne.setPassword(pass);
+			serv.addNewUser(newOne);
+			request.getSession().setAttribute("account", newOne);
+			response.sendRedirect("generic.jsp");
 		}else{
 			try {
 				serv.incActiveUsers();

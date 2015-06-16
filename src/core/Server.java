@@ -16,9 +16,15 @@ public class Server {
 		this.countActiveUsers++;
 		DataBase db;
 		if(countActiveUsers % DataBase.MAX_CONNECTIONS == 1){
+			System.out.println("Increased");
 			db = new DataBase();
 			dataList.add(db);
 		}
+	}
+	
+	public DataBase getDB() {
+		if (dataList.size() == 0) return new DataBase();
+		return dataList.get(dataList.size()-1);
 	}
 
 	public synchronized void decActiveUsers() {

@@ -12,16 +12,7 @@
 
 /* Basic */
 body {
-	font-size: 100%;
-	font-family: "PT Sans", sans-serif;
-	color: #505260;
-	background-color: white;
-}
-
-*, *:after, *:before {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+	background-color: #FFF;
 }
 
 body, input, select, textarea {

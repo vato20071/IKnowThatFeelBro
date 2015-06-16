@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import core.Account;
 import core.DataBase;
+import core.Server;
 
 /**
  * Servlet implementation class NormalSignUp
@@ -32,42 +33,23 @@ public class NormalSignUp extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DataBase dt = new DataBase();
-		String name = request.getParameter("reg_username");
-		System.out.println(name);
-		if (dt.getAccountByName(name) != null) {
-			// TODO
-		} else {
-			String nick = request.getParameter("reg_nickname");
-			String password = request.getParameter("reg_pass");
-			MessageDigest m;
-			String pass = "";
-			try {
-				m = MessageDigest.getInstance("SHA");
-				pass = m.digest(password.getBytes()).toString();
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
-			Account newOne = new Account();
-			newOne.setUserName(name);
-			newOne.setNickName(nick);
-			newOne.setPassword(pass);
-			dt.insertDataIntoAccount(newOne);
-			request.getSession().setAttribute("account", newOne);
-			response.sendRedirect("generic.jsp");
-
-		}
-
+		chooseAction(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DataBase dt = new DataBase();
+		chooseAction(request, response);
+	}
+
+	private void chooseAction(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
+		serv.incActiveUsers();
 		String name = request.getParameter("reg_username");
-		if (dt.getAccountByName(name) != null) {
-			// TODO
+		DataBase db = serv.getDB();
+		if (db.getAccountByName(name) != null) {
+			System.out.println("Account already registered, please choose the other one");
 		} else {
 			String nick = request.getParameter("reg_nickname");
 			String password = request.getParameter("reg_pass");
@@ -84,10 +66,11 @@ public class NormalSignUp extends HttpServlet {
 			newOne.setUserName(name);
 			newOne.setNickName(nick);
 			newOne.setPassword(pass);
-			dt.insertDataIntoAccount(newOne);
+			serv.addNewUser(newOne);
 			request.getSession().setAttribute("account", newOne);
 			response.sendRedirect("generic.jsp");
 		}
+		serv.decActiveUsers();
 	}
 
 }

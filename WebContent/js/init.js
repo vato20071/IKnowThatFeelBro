@@ -3,6 +3,7 @@
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
  */
+
 $(function() {
 	// Calling Login Form
 	$("#login_form").click(function() {
@@ -30,6 +31,12 @@ $(function() {
 
 })
 
+function script() {
+	console.log($('#reg_username').value);
+	$.post('NormalSignUp', {reg_username: $('#reg_username').value, reg_nickname: $('#reg_nickname').value, reg_pass: $('#reg_pass').value}, function(data) {
+	});
+}
+
 function signinCallback(authResult) {
 	if (authResult['status']['signed_in']) {
 		gapi.client.load('plus', 'v1', function() {
@@ -54,9 +61,6 @@ function fbAuth() {
     FB.login(function(response) {
       if (response.authResponse) {
         FB.api('/me', function(me) {
-        	document.createAttribute('username');
-        	document.getElementById('username').value = "f" + me.id;
-        	document.getElementById('nickname').value = me.name;
         	$.post('NormalSignUp', {reg_username: "f" + me.id, reg_nickname: me.name}, function(returnData) {
 			});
         });

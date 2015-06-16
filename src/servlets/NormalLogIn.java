@@ -37,31 +37,7 @@ public class NormalLogIn extends HttpServlet {
 	protected void doGet(HttpServletRequest request, 
 							HttpServletResponse response) 
 							throws ServletException, IOException {
-		Server serv = (Server)request.getServletContext().getAttribute("server");
-		serv.incActiveUsers();
-		DataBase db = serv.getDB();
-		String name = request.getParameter("reg_username");
-		Account acc = db.getAccountByName(name);
-		if(acc != null) {
-			String offeredPassword = request.getParameter("reg_pass");
-			String realPasswordHash = acc.getPassword();
-			MessageDigest m;
-			String offeredPasswordHash = "";
-			try {
-				m = MessageDigest.getInstance("SHA");
-				offeredPasswordHash = m.digest(offeredPassword.getBytes()).toString();
-				if(offeredPasswordHash.equals(realPasswordHash)) {
-					response.sendRedirect("generic.jsp");					
-				} else {
-					//TODO: retry
-				}
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
-			
-		} else {
-			//TODO: retry
-		}
+		
 		
 	}
 
@@ -71,8 +47,31 @@ public class NormalLogIn extends HttpServlet {
 	protected void doPost(HttpServletRequest request, 
 							HttpServletResponse response) 
 							throws ServletException, IOException {
-		
-		
-		// TODO Auto-generated method stub
+		Server serv = (Server)request.getServletContext().getAttribute("server");
+		serv.incActiveUsers();
+		DataBase db = serv.getDB();
+		String name = request.getParameter("log_user");
+		Account acc = db.getAccountByName(name);
+		if(acc != null) {
+			String offeredPassword = request.getParameter("log_pass");
+			String realPasswordHash = acc.getPassword();
+			MessageDigest m;
+			String offeredPasswordHash = "";
+			try {
+				m = MessageDigest.getInstance("SHA");
+				offeredPasswordHash = DataBase.hexToString(m.digest(offeredPassword.getBytes()));
+				if(offeredPasswordHash.equals(realPasswordHash)) {
+					request.getSession().setAttribute("account", acc);
+					response.sendRedirect("generic.jsp");					
+				} else {
+					//TODO: retry
+//					System.out.println("Hash not equal");
+				}
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			
+		} else {
+		}
 	}
 }

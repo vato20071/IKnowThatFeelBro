@@ -30,13 +30,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--/web-fonts-->
 </head>
 <body>
-	<h1>Flate Signup And Login Form</h1>
+	<h1><%= nickName + "'s Profile Information" %></h1>
 <div class="two-forms">
 	<div class="wrap">
 		<div class="signup">
 			<h2>Change Account Info</h2>
 			<div class="singup-info">
-					<form action="generic" method="post">
+					<form action="SaveData" method="post">
 						<div class="users">
 							Nickname:
 							<input name="nickname" type="text" class="text" value="<%= nickName %>"
@@ -54,9 +54,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<input name="gplus" type="text" class="text" value="<%= gplus %>"
 								onfocus="this.value = '';"
 								onblur="if (this.value == '') {this.value = '<%= gplus %>';}">
-						</div>
-						<div align = "center">
-							<input type="submit" onclick="myFunction()" value="Save Updated Info" >
+							<input type="submit" value="Save Updated Info" >
 						</div>
 					</form>
 					<p>
@@ -75,9 +73,5 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="clear"> </div>
 	</div>
 </div>
-		<div class="copy-right">
-					<p>Template by <a href="http://w3layouts.com" target="_blank">w3layouts</a> </p>
-			</div>
-
 </body>
 </html>

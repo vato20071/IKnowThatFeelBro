@@ -20,6 +20,16 @@ public class DataBase implements DataBaseInterface{
 		initConnection(ds);
 	}
 
+	public static String hexToString(byte[] bytes) {
+		StringBuffer buff = new StringBuffer();
+		for (int i=0; i<bytes.length; i++) {
+			int val = bytes[i];
+			val = val & 0xff;  // remove higher bits, sign
+			if (val<16) buff.append('0'); // leading 0
+			buff.append(Integer.toString(val, 16));
+		}
+		return buff.toString();
+	}
 	/**
 	 * Initializes BasicDataSource ds 
 	 * @param ds
@@ -242,10 +252,26 @@ public class DataBase implements DataBaseInterface{
 				return list;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public void updateAccount(Account user) {
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("update account set nickname = ?, mail = ?, fb = ?, gplus = ? "
+					+ "where user_name = ?")) {
+				stmt.setString(1, user.getNickName());
+				stmt.setString(2, user.getMail());
+				stmt.setString(3, user.getFacebook());
+				stmt.setString(4, user.getGplus());
+				stmt.setString(5, user.getUserName());
+				stmt.execute();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

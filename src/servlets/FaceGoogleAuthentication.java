@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,8 +68,11 @@ public class FaceGoogleAuthentication extends HttpServlet {
 			response.sendRedirect("generic.jsp");
 			return;
 		}else{
+			Account newOne = new Account();
+			newOne.setUserName(name);
 			try {
 				serv.incActiveUsers();
+				request.getSession().setAttribute("account", newOne);
 				response.sendRedirect("generic.jsp");
 				return;
 			} catch (IOException e) {

@@ -34,11 +34,9 @@ public class Settings extends HttpServlet {
 		Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
 		serv.incActiveUsers();
 		DataBase db = serv.getDB();
-		Account old = (Account) request.getSession().getAttribute("account");
-		System.out.println(old.getUserName());
-		Account current = db.getAccountByName(old.getUserName());
+		String old = (String) request.getSession().getAttribute("accountID");
+		Account current = db.getAccountByName(old);
 		serv.decActiveUsers();
-		System.out.println(current.getUserName() + " " + current.getNickName());
 		request.getSession().setAttribute("account", current);
 		response.sendRedirect("settings.jsp");
 	}

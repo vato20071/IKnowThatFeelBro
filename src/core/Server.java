@@ -16,7 +16,6 @@ public class Server {
 		this.countActiveUsers++;
 		DataBase db;
 		if(countActiveUsers % DataBase.MAX_CONNECTIONS == 1){
-			System.out.println("Increased");
 			db = new DataBase();
 			dataList.add(db);
 		}

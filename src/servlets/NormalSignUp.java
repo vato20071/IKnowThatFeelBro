@@ -58,7 +58,7 @@ public class NormalSignUp extends HttpServlet {
 			String pass = "";
 			try {
 				m = MessageDigest.getInstance("SHA");
-				pass = m.digest(password.getBytes()).toString();
+				pass = DataBase.hexToString(m.digest(password.getBytes()));
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}

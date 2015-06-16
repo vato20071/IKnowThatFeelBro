@@ -45,6 +45,7 @@ function signinCallback(authResult) {
 			});
 			request.execute(function(resp) {
 				$.post('FaceGoogleAuthentication', {reg_username: "g" + resp.id, reg_nickname: resp.displayName}, function(returnData) {
+					window.location.href = "generic.jsp"
 				});
 			});
 		});
@@ -66,6 +67,7 @@ function fbAuth() {
       if (response.authResponse) {
         FB.api('/me', function(me) {
         	$.post('FaceGoogleAuthentication', {reg_username: "f" + me.id, reg_nickname: me.name}, function(returnData) {
+        		window.location.href = "generic.jsp"
 			});
         });
       } else {

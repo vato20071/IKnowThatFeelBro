@@ -67,10 +67,12 @@ public class FaceGoogleAuthentication extends HttpServlet {
 			serv.addNewUser(newOne);
 			request.getSession().setAttribute("account", newOne);
 			response.sendRedirect("generic.jsp");
+			return;
 		}else{
 			try {
 				serv.incActiveUsers();
 				response.sendRedirect("generic.jsp");
+				return;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

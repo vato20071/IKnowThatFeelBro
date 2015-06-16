@@ -60,5 +60,5 @@ public class Room {
 	public void removeInvitedUser(String user) {
 		invitedUsers.remove(user);
 	}
-	
+
 }

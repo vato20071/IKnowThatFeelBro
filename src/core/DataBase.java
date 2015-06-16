@@ -45,16 +45,17 @@ public class DataBase implements DataBaseInterface{
 
 	private void addAccount(Connection conn, Account user) throws SQLException {
 		try (PreparedStatement stmt = conn.prepareStatement("insert into account "
-				+ "(user_name, password, nickname, mail, fb, coeff_value, coeff_numb, status) " 
-				+ "values (?, ?, ?, ?, ?, ?, ?, ?)")) {
+				+ "(user_name, password, nickname, mail, fb, gplus, coeff_value, coeff_numb, status) " 
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 			stmt.setString(1, user.getUserName());
 			stmt.setString(2, user.getPassword());
 			stmt.setString(3, user.getNickName());
 			stmt.setString(4, user.getMail());
 			stmt.setString(5, user.getFacebook());
-			stmt.setDouble(6, user.getCoeffValue());
-			stmt.setInt(7, user.getCoeffCount());
-			stmt.setString(8, user.getStatus()+"");
+			stmt.setString(6, user.getGplus());
+			stmt.setDouble(7, user.getCoeffValue());
+			stmt.setInt(8, user.getCoeffCount());
+			stmt.setString(9, user.getStatus()+"");
 			stmt.execute();
 		} 
 	}
@@ -120,6 +121,7 @@ public class DataBase implements DataBaseInterface{
 				acc.setNickName(set.getString("nickname"));
 				acc.setMail(set.getString("mail"));
 				acc.setFacebook(set.getString("fb"));
+				acc.setGplus(set.getString("gplus"));
 				acc.setCoeffValue(set.getDouble("coeff_value"));
 				acc.setCoeffCount(set.getInt("coeff_numb"));
 				acc.setStatus(set.getInt("status"));
@@ -138,6 +140,7 @@ public class DataBase implements DataBaseInterface{
 				return acc;
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("Exception occured when obtaining Account from database by Name");
 		}
 		return null;

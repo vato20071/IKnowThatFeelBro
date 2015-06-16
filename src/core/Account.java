@@ -6,7 +6,7 @@ import java.util.List;
 public class Account {
 	
 	private int ID, coeffCount, status;
-	private String userName, password, mail, facebook, nickName;
+	private String userName, password, mail, facebook, nickName, gplus;
 	private double coeffValue;
 	private HashMap<String, List<String> > friendMap;
 	private DataBase base;
@@ -15,8 +15,25 @@ public class Account {
 		friendMap = new HashMap<>();
 		mail = "";
 		facebook = "";
+		gplus = "";
 	}
 	
+	public String getGplus() {
+		return gplus;
+	}
+
+	public void setGplus(String gplus) {
+		this.gplus = gplus;
+	}
+
+	public HashMap<String, List<String>> getFriendMap() {
+		return friendMap;
+	}
+
+	public void setFriendMap(HashMap<String, List<String>> friendMap) {
+		this.friendMap = friendMap;
+	}
+
 	public void test() {
 		System.out.println("HEre guys ");
 	}

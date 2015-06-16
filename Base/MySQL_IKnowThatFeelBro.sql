@@ -11,6 +11,7 @@ create table if not exists `account`
 	`nickname` varchar(100) not null,
 	`mail` varchar(150) default null,
 	`fb` varchar(150) default null,
+	`gplus` varchar(150) default null,
 	`coeff_value` decimal(3, 2) default 0,
 	`coeff_numb` int default 0,
 	`status` enum('0', '1', '2') default 2, #0-admin, 1-moderator, 2-user

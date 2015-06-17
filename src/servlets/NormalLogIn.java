@@ -61,7 +61,7 @@ public class NormalLogIn extends HttpServlet {
 				m = MessageDigest.getInstance("SHA");
 				offeredPasswordHash = DataBase.hexToString(m.digest(offeredPassword.getBytes()));
 				if(offeredPasswordHash.equals(realPasswordHash)) {
-					request.getSession().setAttribute("account", acc);
+					request.getSession().setAttribute("accountID", acc.getUserName());
 					response.sendRedirect("generic.jsp");					
 				} else {
 					//TODO: retry

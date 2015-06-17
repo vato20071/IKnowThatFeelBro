@@ -1,3 +1,5 @@
+<%@page import="core.DataBase"%>
+<%@page import="core.Server"%>
 <%@page import="core.Account"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -15,29 +17,30 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
-		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-xlarge.css" />
 			
-		</noscript>
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
 	<body>
 
 		<!-- Header -->
-		<% 
-			if(request.getSession().getAttribute("account")==null)
+		<% 	
+			Server serv = (Server) session.getServletContext().getAttribute("server");
+			serv.incActiveUsers();
+			DataBase db = serv.getDB();
+			Account cur = db.getAccountByName((String) session.getAttribute("accountID"));
+			if(cur==null)
 				response.sendRedirect("index.html");
 			else{
-			Account cur=(Account)request.getSession().getAttribute("account");
 		%>
 			<header id="header">
 				<h1><a href="index.html"><%=cur.getNickName()%></a></h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="generic.jsp">Home</a></li>
-						<li><a href="generic.html">Settings</a></li>
+						<li><a href="Settings">Settings</a></li>
 						<li><a href="index.html">Sign out</a></li>
 					</ul>
 				</nav>
@@ -45,8 +48,8 @@
 
 		
 		<div class="categories">
+					  	   <h3>Categories</h3>
 						   <table>
-						  	   <h3>Categories</h3>
 						  	   <tr>
 							      <td><a href="#">All</a></td>
 							      </tr>
@@ -60,7 +63,6 @@
 							      <td><a href="#">English</a></td>
 							      </tr>
 							      </table>
-						  	 </ul>
 						</div>	
 		
 		

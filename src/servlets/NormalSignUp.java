@@ -67,7 +67,7 @@ public class NormalSignUp extends HttpServlet {
 			newOne.setNickName(nick);
 			newOne.setPassword(pass);
 			serv.addNewUser(newOne);
-			request.getSession().setAttribute("account", newOne);
+			request.getSession().setAttribute("accountID", name);
 			response.sendRedirect("generic.jsp");
 		}
 		serv.decActiveUsers();

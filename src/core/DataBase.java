@@ -170,6 +170,27 @@ public class DataBase implements DataBaseInterface{
 		return null;
 	}
 	
+	public List<Category> getAllCategory(){
+		List<Category> categories= new ArrayList<Category>();
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("select * from category")) {
+				try (ResultSet set = stmt.executeQuery()) {
+				while(set.next()){
+				Category cat = new Category();
+				cat.setID(set.getInt("ID"));
+				cat.setName(set.getString("name"));
+				categories.add(cat);
+				}
+				
+			}
+				return categories;
+			}
+		} catch (SQLException e) {
+			System.out.println("Exception occured when obtaining Category from database by ID");
+		}
+		return null;
+	}
+	
 	private Category getCategory(PreparedStatement stmt) throws SQLException {
 		try (ResultSet set = stmt.executeQuery()) {
 			Category cat = new Category();

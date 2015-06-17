@@ -16,4 +16,5 @@ public interface DataBaseInterface {
 	public boolean getFriendShip(Account user1, Account user2);
 	public List<String> getFriendsByCategory(String userName, String categoryName);
 	public List<String> getCategoryList(String userName);
+	public List<Category> getAllCategory();
 }

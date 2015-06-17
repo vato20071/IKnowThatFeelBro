@@ -16,6 +16,10 @@
 <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 <!--Google Fonts-->
 </head>
+	<% if(request.getSession().getAttribute("alreadyLogged") != null){
+			response.sendRedirect("adminLoggedIn.jsp");
+		}
+	%>
 <body>
 <!--login form start here-->
 <h1>Log In Admin Panel</h1>

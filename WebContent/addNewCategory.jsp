@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="core.Account" %>
-<%@ page import="core.Server" %>
-<%@ page import="core.DataBaseInterface" %>
-<%@ page import="core.DataBase" %>
+
 <html>
 <head>
 <title>Admin Panel</title>
@@ -44,32 +41,21 @@
 	<h3>Dashboard</h3>
 	
 		<div class="informasi">
-		Total Accounts registered:  
-		<%	
-		Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
-		String name = request.getParameter("username");
-		DataBase db = serv.getDB();
-		Account acc = db.getAccountByName(name); 
-		int amount = db.getTotalAccount();
-		int online = serv.getCountActiveUsers();
-		request.getSession().setAttribute("amount", amount);
-		request.getSession().setAttribute("online", online);
-		%>
-		<%= amount %>
+		Total Accounts registered: <%= request.getSession().getAttribute("amount") %>
 		</div>
 		
 		<div class="sukses">
-		Online Users: <%= online %>
+		Online Users: <%= request.getSession().getAttribute("online") %>
 		</div>
 		<div>
-		<h3 id="parag">Manage Categories</h3>
+		<h3 id="parag">Adding New Category</h3>
 		</div>
 		<div>
-		<form action="" method=get>
-			<a class="btn1" href="addNewCategory.jsp" style="float: left;">Add Category</a>		
-		</form>
-		<form action="" method=get>
-			<a class="btn" href="deleteCategory.jsp" style="float: right;">Remove Category</a>
+		<form action="AddNewCategory" method=get style="text-align:center">
+			Enter Category Name: <input type="text" name="catName" id="catName" style="text-align:left">
+			<br>
+			<br>
+			<input class="btn1" type="submit" value="Add New Category">		
 		</form>
 		<br>
 		<br>

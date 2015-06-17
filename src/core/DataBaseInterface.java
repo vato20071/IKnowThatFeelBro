@@ -17,4 +17,7 @@ public interface DataBaseInterface {
 	public List<String> getFriendsByCategory(String userName, String categoryName);
 	public List<String> getCategoryList(String userName);
 	public List<Category> getAllCategory();
+	public void changeStatus(String username,String value);
+	public void deleteCategory(String catName);
+	public int getTotalAccount();
 }

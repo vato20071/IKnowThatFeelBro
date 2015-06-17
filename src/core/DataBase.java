@@ -180,8 +180,7 @@ public class DataBase implements DataBaseInterface{
 				cat.setID(set.getInt("ID"));
 				cat.setName(set.getString("name"));
 				categories.add(cat);
-				}
-				
+				}				
 			}
 				return categories;
 			}
@@ -293,6 +292,50 @@ public class DataBase implements DataBaseInterface{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void changeStatus(String username,String value) {
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("update account set status = ? "
+					+ "where user_name = ?")) {
+				stmt.setString(1, value);
+				stmt.setString(2, username);
+				stmt.execute();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+	}
+
+	@Override
+	public void deleteCategory(String catName) {
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("DELETE FROM category WHERE name = ? ")) {
+				stmt.setString(1, catName);
+				stmt.execute();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public int getTotalAccount() {
+		int result = 0;
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) as amount FROM account")) {
+				stmt.execute();
+				try (ResultSet set = stmt.executeQuery()) {
+					while (set.next()) {
+						result = set.getInt("amount");
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 }

@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.security.MessageDigest;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +19,7 @@ import core.Server;
 public class AdminLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final int ADMIN_NUM = 1;
+	private static final int TOKEN = 121314;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -50,15 +50,19 @@ public class AdminLogin extends HttpServlet {
 	private void execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
 		String name = request.getParameter("username");
-		System.out.print(name+" ");
 		DataBase db = serv.getDB();
 		Account acc = db.getAccountByName(name); 
+		int amount = db.getTotalAccount();
+		int online = serv.getCountActiveUsers();
 		if (acc != null && db.getAccountByName(name).getStatus() == ADMIN_NUM) {
 			String offeredPassword = request.getParameter("password");
 			String realPassword = acc.getPassword();
 			try {
 				if(offeredPassword.equals(realPassword)) {
-					serv.incActiveUsers();
+					request.getSession().setAttribute("adminLet", TOKEN);
+					request.getSession().setAttribute("amount", amount);
+					request.getSession().setAttribute("online", online);
+					request.getSession().setAttribute("alreadyLogged", "universal");
 					response.sendRedirect("adminLoggedIn.jsp");
 				} else {
 					response.sendRedirect("adminLogError.jsp");
@@ -66,6 +70,8 @@ public class AdminLogin extends HttpServlet {
 			} catch(Exception ex){
 				
 			}
+		}else {
+			response.sendRedirect("adminLogError.jsp");
 		} 
 	}
 

@@ -45,6 +45,7 @@ public class FaceGoogleAuthentication extends HttpServlet {
 
 	private void execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
+		serv.incActiveUsers();
 		String name = request.getParameter("reg_username");
 		DataBase db = serv.getDB();
 		if (db.getAccountByName(name) == null) {
@@ -55,7 +56,7 @@ public class FaceGoogleAuthentication extends HttpServlet {
 			String pass = "";
 			try {
 				m = MessageDigest.getInstance("SHA");
-				pass = m.digest(password.getBytes()).toString();
+				pass = DataBase.hexToString(m.digest(password.getBytes()));
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
@@ -66,14 +67,15 @@ public class FaceGoogleAuthentication extends HttpServlet {
 			serv.addNewUser(newOne);
 			request.getSession().setAttribute("account", newOne);
 			response.sendRedirect("generic.jsp");
+			serv.decActiveUsers();
 			return;
 		}else{
 			Account newOne = new Account();
 			newOne.setUserName(name);
 			try {
-				serv.incActiveUsers();
 				request.getSession().setAttribute("account", newOne);
 				response.sendRedirect("generic.jsp");
+				serv.decActiveUsers();
 				return;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

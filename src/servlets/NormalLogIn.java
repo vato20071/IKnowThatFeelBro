@@ -48,7 +48,6 @@ public class NormalLogIn extends HttpServlet {
 							HttpServletResponse response) 
 							throws ServletException, IOException {
 		Server serv = (Server)request.getServletContext().getAttribute("server");
-		serv.incActiveUsers();
 		DataBase db = serv.getDB();
 		String name = request.getParameter("log_user");
 		Account acc = db.getAccountByName(name);

@@ -45,7 +45,6 @@ public class FaceGoogleAuthentication extends HttpServlet {
 
 	private void execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
-		serv.incActiveUsers();
 		String name = request.getParameter("reg_username");
 		DataBase db = serv.getDB();
 		if (db.getAccountByName(name) == null) {

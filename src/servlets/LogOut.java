@@ -42,7 +42,7 @@ public class LogOut extends HttpServlet {
 		
 		try {  
 			session.invalidate(); 
-			response.sendRedirect("index.html");
+			response.sendRedirect("index.jsp");
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -57,10 +57,6 @@ public class LogOut extends HttpServlet {
 							throws ServletException, IOException {
 		
 		
-		Server serv = (Server)request.getServletContext().getAttribute("server");
-		
-		serv.decActiveUsers();
-		     
 		HttpSession session=request.getSession();
 		
 		try {  

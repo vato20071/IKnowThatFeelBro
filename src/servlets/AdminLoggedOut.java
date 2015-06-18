@@ -30,8 +30,6 @@ public class AdminLoggedOut extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Server serv = (Server) request.getServletContext().getAttribute("server");
-		serv.decActiveUsers();
 		response.sendRedirect("adminPanel.jsp");
 		request.getSession().invalidate();
 	}

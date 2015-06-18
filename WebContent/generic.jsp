@@ -35,7 +35,7 @@
 			else{
 		%>
 			<header id="header">
-				<h1><a href="index.html"><%=cur.getNickName()%></a></h1>
+				<h1><a href="index.jsp"><%=cur.getNickName()%></a></h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="generic.jsp">Home</a></li>

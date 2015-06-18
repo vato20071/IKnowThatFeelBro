@@ -36,47 +36,20 @@
 			else{
 		%>
 			<header id="header">
-<<<<<<< HEAD
-<<<<<<< HEAD
 				<h1><a href="settings.jsp"><%=cur.getNickName()%></a></h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="generic.jsp">Home</a></li>
-						<li><a href="settings.jsp">Settings</a></li>
-=======
-				<h1><a href="index.jsp"><%=cur.getNickName()%></a></h1>
-				<nav id="nav">
-					<ul>
-						<li><a href="generic.jsp">Home</a></li>
 						<li><a href="Settings">Settings</a></li>
->>>>>>> 9fb0022ddbc7068d5329d3564bc15393b92b1e83
-=======
-				<h1><a href="index.jsp"><%=cur.getNickName()%></a></h1>
-				<nav id="nav">
-					<ul>
-						<li><a href="generic.jsp">Home</a></li>
-						<li><a href="Settings">Settings</a></li>
->>>>>>> 9fb0022ddbc7068d5329d3564bc15393b92b1e83
 						<li><a href="LogOut">Sign out</a></li>
 					</ul>
 				</nav>
 			</header>
 
 		
-<<<<<<< HEAD
-								<div class="categories">
-						  	   <h3>Categories</h3>
-						  	  
-						   <table>
-						   
-=======
 		<div class="categories">
 					  	   <h3>Categories</h3>
 						   <table>
-<<<<<<< HEAD
->>>>>>> 9fb0022ddbc7068d5329d3564bc15393b92b1e83
-=======
->>>>>>> 9fb0022ddbc7068d5329d3564bc15393b92b1e83
 						  	   <tr>
 							      <td><a href="#">All</a></td>
 							      </tr>
@@ -101,7 +74,7 @@
 		<div class="wrapper-demo" >
 				
 				<!--start-wrapper-dropdown-2-->
-					<div id="dd" class="wrapper-dropdown-2" tabindex="1">Friends<i><img class="menu" src="images/menu.png"/></i>
+					<div id="dd" class="wrapper-dropdown-2">Friends<i><img class="menu" src="images/menu.png"/></i>
 									 <!-- start search-->
 				    <div class="search-box">
 					    <div id="sb-search" class="sb-search">

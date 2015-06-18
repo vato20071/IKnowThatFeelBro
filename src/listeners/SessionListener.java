@@ -24,6 +24,7 @@ public class SessionListener implements HttpSessionListener {
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent arg0)  {
+    	System.out.println("Session Created");
     	Server serv = (Server) arg0.getSession().getServletContext().getAttribute("server");
     	serv.incActiveUsers();
     }
@@ -32,6 +33,7 @@ public class SessionListener implements HttpSessionListener {
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public void sessionDestroyed(HttpSessionEvent arg0)  {
+    	System.out.println("Session Destroyed");
     	Server serv = (Server) arg0.getSession().getServletContext().getAttribute("server");
     	serv.decActiveUsers();
     }

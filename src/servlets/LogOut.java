@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import core.Server;
-
 /**
  * Servlet implementation class NormalLogIn
  */
@@ -34,10 +32,6 @@ public class LogOut extends HttpServlet {
 							HttpServletResponse response) 
 							throws ServletException, IOException {
 		
-		Server serv = (Server)request.getServletContext().getAttribute("server");
-		
-		serv.decActiveUsers();
-		     
 		HttpSession session=request.getSession();
 		
 		try {  

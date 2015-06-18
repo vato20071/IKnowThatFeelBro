@@ -1,6 +1,7 @@
 package core;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class Account {
@@ -17,7 +18,17 @@ public class Account {
 		facebook = "";
 		gplus = "";
 	}
-	
+	public boolean containsFriend(String name){
+		Iterator iterator = friendMap.entrySet().iterator();
+		while (iterator.hasNext()) {
+			HashMap.Entry mapEntry = (HashMap.Entry) iterator.next();
+			
+			List<String> friendList=(List<String>)mapEntry.getValue();
+			if(friendList.contains(name))
+				return true;
+		}
+		return false;
+	}
 	public String getGplus() {
 		return gplus;
 	}

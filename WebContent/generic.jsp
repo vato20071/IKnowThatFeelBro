@@ -1,6 +1,11 @@
 <%@page import="core.DataBase"%>
 <%@page import="core.Server"%>
 <%@page import="core.Account"%>
+<%@page import="core.Category"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Iterator"%>
 
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -21,6 +26,7 @@
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-xlarge.css" />
+			<link rel="stylesheet" href="css/gen.css" />
 			
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
@@ -31,9 +37,11 @@
 			Server serv = (Server) session.getServletContext().getAttribute("server");
 			DataBase db = serv.getDB();
 			Account cur = db.getAccountByName((String) session.getAttribute("accountID"));
+			HashMap friends=cur.getFriendMap();
 			if(cur==null)
 				response.sendRedirect("index.jsp");
 			else{
+				List<Category> categories=db.getAllCategory();
 		%>
 			<header id="header">
 				<h1><a href="settings.jsp"><%=cur.getNickName()%></a></h1>
@@ -50,17 +58,19 @@
 		<div class="categories">
 					  	   <h3>Categories</h3>
 						   <table>
+						   
+						   <%for(int i=0; i<categories.size()&& i<4; i++){
+							   
+							   Category cat= categories.get(i);
+							   
+							   %>
+						   
 						  	   <tr>
+							      <td><a href="#"><%=cat.getName() %></a></td>
+							      </tr>
+							    <%} %>  
+							    <tr>
 							      <td><a href="#">All</a></td>
-							      </tr>
-							      <tr>
-							      <td><a href="#">Hindi</a></td>
-							      </tr>
-							      <tr>
-							      <td><a href="#">Telugu</a></td>
-							      </tr>
-							      <tr>
-							      <td><a href="#">English</a></td>
 							      </tr>
 							      </table>
 						</div>	
@@ -78,7 +88,7 @@
 									 <!-- start search-->
 				    <div class="search-box">
 					    <div id="sb-search" class="sb-search">
-							<form>
+							<form action = "FriendSearch" method="get">
 								<input class="sb-search-input" placeholder="Search" type="search" name="search" id="search">
 								<input class="sb-search-submit" type="submit" value="">
 								<span class="sb-icon-search"> </span>
@@ -95,37 +105,32 @@
 					<!-- /search-scripts -->
  				<!-- end search-->
 							<ul class="dropdown">	
-												
+									<%Iterator iterator = friends.entrySet().iterator();
+									while (iterator.hasNext()) {
+										HashMap.Entry mapEntry = (HashMap.Entry) iterator.next();
+										String cat=(String)mapEntry.getKey();
+										List<String> friendList=(List<String>)mapEntry.getValue();
+										for(int i=0; i<friendList.size(); i++){
+											
+										
+										%>			
 								<div class="friends-grids" id="grid">
 									<div class="grids-left">
 										<img src="images/a1.png" />
 									</div>	
 									
 									<div class="grids-right">
-										<h2>Name</h2>
+										<h2><%= cat %></h2>
 										<!--<img src="images/heart.png" />-->
 									<ul class="grids-right-info">
-											<li class="user">category</li>
+											<li class="user"><%= friendList.get(i) %></li>
 											</ul>
 									</div>
 									
 								</div>
-							<div class="friends-grids" >
-									<div class="grids-left">
-										<img src="images/a1.png" />
-									</div>	
-									
-									<div class="grids-right">
-										<h2>Category</h2>
-										<!--<img src="images/heart.png" />-->
-									<ul class="grids-right-info">
-											<li class="user">Name</li>
+								<%} %>
+								<% } %>
 											
-										
-									</ul>
-									</div>
-									
-								</div>					
 							</ul>
 							
 												

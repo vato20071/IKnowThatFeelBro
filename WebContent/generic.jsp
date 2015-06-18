@@ -2,6 +2,7 @@
 <%@page import="core.Server"%>
 <%@page import="core.Account"%>
 
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -35,20 +36,47 @@
 			else{
 		%>
 			<header id="header">
+<<<<<<< HEAD
+<<<<<<< HEAD
+				<h1><a href="settings.jsp"><%=cur.getNickName()%></a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="generic.jsp">Home</a></li>
+						<li><a href="settings.jsp">Settings</a></li>
+=======
 				<h1><a href="index.jsp"><%=cur.getNickName()%></a></h1>
 				<nav id="nav">
 					<ul>
 						<li><a href="generic.jsp">Home</a></li>
 						<li><a href="Settings">Settings</a></li>
+>>>>>>> 9fb0022ddbc7068d5329d3564bc15393b92b1e83
+=======
+				<h1><a href="index.jsp"><%=cur.getNickName()%></a></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="generic.jsp">Home</a></li>
+						<li><a href="Settings">Settings</a></li>
+>>>>>>> 9fb0022ddbc7068d5329d3564bc15393b92b1e83
 						<li><a href="LogOut">Sign out</a></li>
 					</ul>
 				</nav>
 			</header>
 
 		
+<<<<<<< HEAD
+								<div class="categories">
+						  	   <h3>Categories</h3>
+						  	  
+						   <table>
+						   
+=======
 		<div class="categories">
 					  	   <h3>Categories</h3>
 						   <table>
+<<<<<<< HEAD
+>>>>>>> 9fb0022ddbc7068d5329d3564bc15393b92b1e83
+=======
+>>>>>>> 9fb0022ddbc7068d5329d3564bc15393b92b1e83
 						  	   <tr>
 							      <td><a href="#">All</a></td>
 							      </tr>
@@ -73,15 +101,16 @@
 		<div class="wrapper-demo" >
 				
 				<!--start-wrapper-dropdown-2-->
-					<div id="dd" class="wrapper-dropdown-2" tabindex="1">Friends<i><img src="images/menu.png"/></i>
+					<div id="dd" class="wrapper-dropdown-2" tabindex="1">Friends<i><img class="menu" src="images/menu.png"/></i>
 									 <!-- start search-->
 				    <div class="search-box">
 					    <div id="sb-search" class="sb-search">
 							<form>
-								<input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
+								<input class="sb-search-input" placeholder="Search" type="search" name="search" id="search">
 								<input class="sb-search-submit" type="submit" value="">
 								<span class="sb-icon-search"> </span>
 							</form>
+							
 						</div>
 				    </div>
 				    <!-- search-scripts -->
@@ -94,7 +123,7 @@
  				<!-- end search-->
 							<ul class="dropdown">	
 												
-								<div class="friends-grids">
+								<div class="friends-grids" id="grid">
 									<div class="grids-left">
 										<img src="images/a1.png" />
 									</div>	
@@ -103,15 +132,33 @@
 										<h2>Name</h2>
 										<!--<img src="images/heart.png" />-->
 									<ul class="grids-right-info">
-											<li class="user">shetenili sagnebi</li>
+											<li class="user">category</li>
+											</ul>
+									</div>
+									
+								</div>
+							<div class="friends-grids" >
+									<div class="grids-left">
+										<img src="images/a1.png" />
+									</div>	
+									
+									<div class="grids-right">
+										<h2>Category</h2>
+										<!--<img src="images/heart.png" />-->
+									<ul class="grids-right-info">
+											<li class="user">Name</li>
 											
-										<div class="clear"> </div>
+										
 									</ul>
 									</div>
-									<div class="clear"> </div>
-								</div>
-												
+									
+								</div>					
 							</ul>
+							
+												
+								
+												
+							
 					</div>
 			</div>
 			
@@ -146,35 +193,13 @@
 			</script>
 			
 			
-			
-			
-			
-
 		<!-- Footer -->
-			<footer id="footer">
-				<div class="container">
-					<div class="row">
-						<section class="4u 6u(medium) 12u$(small)">
-							<h3>Lorem ipsum</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, cumque!</p>
-							<ul class="alt">
-								<li><a href="#">Lorem ipsum dolor sit amet.</a></li>
-								<li><a href="#">Quod adipisci perferendis et itaque.</a></li>
-								<li><a href="#">Itaque eveniet ullam, veritatis reiciendis?</a></li>
-								<li><a href="#">Accusantium repellat accusamus a, soluta.</a></li>
-							</ul>
-						</section>
-						<section class="4u 6u$(medium) 12u$(small)">
-							<h3>Nostrum, repellat!</h3>
-							<p>Tenetur voluptate exercitationem eius tempora! Obcaecati suscipit, soluta earum blanditiis.</p>
-							<ul class="alt">
-								<li><a href="#">Lorem ipsum dolor sit amet.</a></li>
-								<li><a href="#">Id inventore, qui necessitatibus sunt.</a></li>
-								<li><a href="#">Deleniti eum odit nostrum eveniet.</a></li>
-								<li><a href="#">Illum consectetur quibusdam eos corporis.</a></li>
-							</ul>
-						</section>
-						<section class="4u$ 12u$(medium) 12u$(small)">
+		
+			
+				<div class="ft">
+					
+						
+						
 							<h3>Contact Us</h3>
 							<ul class="icons">
 								<li><a href="#" class="icon rounded fa-twitter"><span class="label">Twitter</span></a></li>
@@ -183,30 +208,16 @@
 								<li><a href="#" class="icon rounded fa-google-plus"><span class="label">Google+</span></a></li>
 								<li><a href="#" class="icon rounded fa-linkedin"><span class="label">LinkedIn</span></a></li>
 							</ul>
-							<ul class="tabular">
-								<li>
-									<h3>Address</h3>
-									1234 Somewhere Road<br>
-									Nashville, TN 00000
-								</li>
-								<li>
-									<h3>Mail</h3>
-									<a href="#">someone@untitled.tld</a>
-								</li>
-								<li>
-									<h3>Phone</h3>
-									(000) 000-0000
-								</li>
-							</ul>
-						</section>
-					</div>
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li>
-						<li>Design: <a href="http://templated.co">TEMPLATED</a></li>
-						<li>Images: <a href="http://unsplash.com">Unsplash</a></li>
-					</ul>
+							
+						
+					
+					
 				</div>
-			</footer>
+			
+			
+			
+
+		
 	<%} %>
 	</body>
 </html>

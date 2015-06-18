@@ -67,7 +67,6 @@ public class FaceGoogleAuthentication extends HttpServlet {
 			serv.addNewUser(newOne);
 			request.getSession().setAttribute("accountID", name);
 			response.sendRedirect("generic.jsp");
-			serv.decActiveUsers();
 			return;
 		}else{
 			Account newOne = new Account();
@@ -75,7 +74,6 @@ public class FaceGoogleAuthentication extends HttpServlet {
 			try {
 				request.getSession().setAttribute("accountID", name);
 				response.sendRedirect("generic.jsp");
-				serv.decActiveUsers();
 				return;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

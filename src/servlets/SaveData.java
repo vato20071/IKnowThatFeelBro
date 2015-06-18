@@ -38,7 +38,6 @@ public class SaveData extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Server serv = (Server) request.getServletContext().getAttribute("server");
-		serv.incActiveUsers();
 		DataBase db = serv.getDB();
 		Account current = (Account) request.getSession().getAttribute("account");
 		String nickname = checkString(request.getParameter("nickname"));

@@ -20,7 +20,7 @@ import core.Server;
 @WebServlet("/AdminLogin")
 public class AdminLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final int ADMIN_NUM = 2;
+	private static final int ADMIN_NUM = 1;
 	private static final int TOKEN = 121314;
 
 	/**
@@ -51,6 +51,7 @@ public class AdminLogin extends HttpServlet {
 
 	private void execute(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
+		serv.incActiveUsers();
 		String name = request.getParameter("username");
 		DataBase db = serv.getDB();
 		Account acc = db.getAccountByName(name); 

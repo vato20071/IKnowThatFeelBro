@@ -57,6 +57,17 @@ public class LogOut extends HttpServlet {
 							throws ServletException, IOException {
 		
 		
-		// TODO Auto-generated method stub
+		Server serv = (Server)request.getServletContext().getAttribute("server");
+		
+		serv.decActiveUsers();
+		     
+		HttpSession session=request.getSession();
+		
+		try {  
+			session.invalidate(); 
+			response.sendRedirect("index.html");
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }

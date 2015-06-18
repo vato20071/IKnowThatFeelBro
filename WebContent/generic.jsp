@@ -28,11 +28,10 @@
 		<!-- Header -->
 		<% 	
 			Server serv = (Server) session.getServletContext().getAttribute("server");
-			serv.incActiveUsers();
 			DataBase db = serv.getDB();
 			Account cur = db.getAccountByName((String) session.getAttribute("accountID"));
 			if(cur==null)
-				response.sendRedirect("index.html");
+				response.sendRedirect("index.jsp");
 			else{
 		%>
 			<header id="header">
@@ -41,7 +40,7 @@
 					<ul>
 						<li><a href="generic.jsp">Home</a></li>
 						<li><a href="Settings">Settings</a></li>
-						<li><a href="index.html">Sign out</a></li>
+						<li><a href="LogOut">Sign out</a></li>
 					</ul>
 				</nav>
 			</header>

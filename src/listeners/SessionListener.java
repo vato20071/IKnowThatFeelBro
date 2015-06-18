@@ -24,16 +24,12 @@ public class SessionListener implements HttpSessionListener {
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent arg0)  {
-    	Server server = (Server) arg0.getSession().getServletContext().getAttribute("server");
-    	server.incActiveUsers();
     }
 
 	/**
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public void sessionDestroyed(HttpSessionEvent arg0)  {
-    	Server server = (Server) arg0.getSession().getServletContext().getAttribute("server");
-    	server.decActiveUsers();
     }
 	
 }

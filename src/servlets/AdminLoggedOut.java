@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import core.Server;
+
 
 /**
  * Servlet implementation class adminLoggedOut
@@ -28,6 +30,8 @@ public class AdminLoggedOut extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Server serv = (Server) request.getServletContext().getAttribute("server");
+		serv.decActiveUsers();
 		response.sendRedirect("adminPanel.jsp");
 		request.getSession().invalidate();
 	}

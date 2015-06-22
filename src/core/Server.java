@@ -7,6 +7,7 @@ import java.util.List;
 public class Server {
 	private int countActiveUsers;
 	private List<DataBase> dataList;
+	private HashMap<String, Category> categoryList;
 	
 	public int getCountActiveUsers() {
 		return countActiveUsers;
@@ -35,6 +36,7 @@ public class Server {
 	
 	public Server(){
 		dataList = new ArrayList<DataBase>();
+		categoryList = new HashMap<>();
 		countActiveUsers = 0;
 	}
 	
@@ -70,5 +72,8 @@ public class Server {
 		return mp;
 	}
 	
+	public HashMap<String, Category> getCategoryList() {
+		return categoryList;
+	}
 	
 }

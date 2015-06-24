@@ -66,7 +66,7 @@
 							   %>
 						   
 						  	   <tr>
-							      <td><a href="#"><%=cat.getName() %></a></td>
+							      <td><a href="RoomList?category=<%=cat.getID() %>"><%=cat.getName() %></a></td>
 							      </tr>
 							    <%} %>  
 							    <tr>

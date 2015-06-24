@@ -3,6 +3,7 @@ package core;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class Account {
 	
@@ -19,11 +20,10 @@ public class Account {
 		gplus = "";
 	}
 	public boolean containsFriend(String name){
-		Iterator iterator = friendMap.entrySet().iterator();
+		Set<String> set = friendMap.keySet();
+		Iterator<String> iterator = set.iterator();
 		while (iterator.hasNext()) {
-			HashMap.Entry mapEntry = (HashMap.Entry) iterator.next();
-			
-			List<String> friendList=(List<String>)mapEntry.getValue();
+			List<String> friendList = friendMap.get(iterator.next());
 			if(friendList.contains(name))
 				return true;
 		}

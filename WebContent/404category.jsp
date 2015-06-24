@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
+
 <html>
 <head>
 <title>Admin Panel</title>
@@ -21,7 +22,7 @@
 	<div class="inHeader">
 		<div class="mosAdmin">
 		Hello, My Lord<br>
-		<a href="index.html">Visit Website</a>|
+		<a href="index.jsp">Visit Website</a>|
 		<form action="adminLoggedOut" method=get>
 			<input type="submit" value= "Log Out" >		
 		</form>

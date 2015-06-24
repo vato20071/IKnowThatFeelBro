@@ -4,6 +4,7 @@
 <%@ page import="core.Server" %>
 <%@ page import="core.DataBaseInterface" %>
 <%@ page import="core.DataBase" %>
+
 <html>
 <head>
 <title>Admin Panel</title>
@@ -24,7 +25,7 @@
 	<div class="inHeader">
 		<div class="mosAdmin">
 		Hello, My Lord<br>
-		<a href="index.html">Visit Website</a>|
+		<a href="index.jsp">Visit Website</a>|
 		<form action="adminLoggedOut" method=get>
 			<input type="submit" value= "Log Out" >		
 		</form>

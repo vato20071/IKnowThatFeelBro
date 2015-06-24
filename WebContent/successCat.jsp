@@ -21,7 +21,7 @@
 	<div class="inHeader">
 		<div class="mosAdmin">
 		Hello, My Lord<br>
-		<a href="index.html">Visit Website</a>|
+		<a href="index.jsp">Visit Website</a>|
 		<form action="adminLoggedOut" method=get>
 			<input type="submit" value= "Log Out" >		
 		</form>

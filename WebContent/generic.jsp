@@ -37,7 +37,7 @@
 			Server serv = (Server) session.getServletContext().getAttribute("server");
 			DataBase db = serv.getDB();
 			Account cur = db.getAccountByName((String) session.getAttribute("accountID"));
-			HashMap friends=cur.getFriendMap();
+			HashMap<String, List<String>> friends=cur.getFriendMap();
 			if(cur==null)
 				response.sendRedirect("index.jsp");
 			else{
@@ -105,12 +105,14 @@
 					<!-- /search-scripts -->
  				<!-- end search-->
 							<ul class="dropdown">	
-									<%Iterator iterator = friends.entrySet().iterator();
-									while (iterator.hasNext()) {
-										HashMap.Entry mapEntry = (HashMap.Entry) iterator.next();
-										String cat=(String)mapEntry.getKey();
-										List<String> friendList=(List<String>)mapEntry.getValue();
-										for(int i=0; i<friendList.size(); i++){
+							<li>
+									<%	Iterator<String> iterator = friends.keySet().iterator();
+									
+										while (iterator.hasNext()) {
+											
+											String cat = iterator.next();
+											List<String> friendList = friends.get(cat);
+											for(int i=0; i<friendList.size(); i++){
 											
 										
 										%>			
@@ -130,7 +132,7 @@
 								</div>
 								<%} %>
 								<% } %>
-											
+											</li>
 							</ul>
 							
 												

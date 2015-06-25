@@ -45,6 +45,8 @@ public class RoomList extends HttpServlet {
                 HashMap<String, Category> categories = serv.getCategoryList();
                 if(!categories.containsKey(catName)) {
                         categories.put(catName, cat);
+                } else {
+                	cat = categories.get(catName);
                 }
                
                 ses.setAttribute("account", acc);

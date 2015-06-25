@@ -1,3 +1,4 @@
+<%@page import="servlets.RoomList"%>
 <%@page import="core.Room"%>
 <%@page import="core.Account"%>
 <%@page import="core.Category"%>
@@ -41,19 +42,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 	<!----start-header---->
 	<div class="header" id="home">
-		<div class="container">
+		<div class="container" align = "center">
 			<div class="logo">
 				<a href="index.jsp"><img src="images/pic09.jpg" alt=""></a>
 			</div>
+			<ul class="navigcat">
+			</ul>
+<%-- 			<h3 style="color:white"> <%= cat.getName() %></h3> --%>
 			<div class="navigation">
 			 <span class="menu"></span> 
 				<ul class="navig">
+					<li><a href="RoomList?category=<%=cat.getID()%>"><%=cat.getName() %></a></li>
 					<li><a href="generic.jsp">Home</a><span> </span></li>
-					<li><a href="about.html">About</a><span> </span></li>
-					<li><a href="blog.html">Blog</a><span> </span></li>
-					<li><a href="pages.html">Pages</a><span> </span></li>
-					<li><a href="gallery.html">Gallery</a><span> </span></li>
-					<li><a href="contact.html">Contact</a><span> </span></li>
+					<li><a href="Settings">Settings</a><span> </span></li>
+					<li><a href="LogOut">Log Out</a><span> </span></li>
 				</ul>
 			</div>
 				 <!-- script-for-menu -->
@@ -75,32 +77,39 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="flexslider">
                     <ul class="slides">
 						<%	System.out.println(rooms.size());
-							for (int i=0; i<rooms.size(); i++) {
-								Room room = rooms.get(i); 
-								boolean printLi = i % 6 == 0;
-								boolean printDiv = i % 3 == 0;
-								int whichBanner = i / 3 % 2; 
-								if (printLi) {
-									out.println("<li>");
-								}
-								if (printDiv)
-									if (whichBanner == 0) out.println("<div class=\"banner-top\">");
-									else out.println("<div class=\"banner-center\">");
-								%>
-								<div class="col-md-4 banner-left">
-									<div class="bnr-one">
-										<img src="images/b-3.jpg" alt="" />
-										<h3>Quisque pharetra</h3>
-										<a href="#">Read More</a>
+							for (int i=0; i<Math.ceil(rooms.size()/6.0); i++) {
+								out.println("<li style=\"display: list-item\">");
+								out.println("<div class=\"banner-top\">");
+								for (int j=0; j<3 && (i*6 + j) < rooms.size() ; j++) { %>
+									<div class="col-md-4 banner-left">
+										<div class="bnr-one">
+											<img src="images/bg.jpg" alt="" />
+											<h3><%=rooms.get(i*6+j).getRoomName() %></h3>
+											<h4><%="Online: " + rooms.get(i*6+j).membersCount() %></h4>
+											<a href="#">Read More</a>
+										</div>
 									</div>
-								</div>
-							<%
-								if (printDiv) out.println("</div>");
-								if (printLi) out.println("</li>");
-							}
-							%>
-						}
-					</ul>
+							<%	} %>
+							<%	out.println("</div>");
+								out.println("<div class=\"banner-center\">");
+								for (int j=0; j<3 && (i*6 + 3 + j) < rooms.size(); j++) { %>
+									<div class="col-md-4 banner-left">
+										<div class="bnr-one">
+											<img src="images/bg.jpg" alt="" />
+											<h3><%=rooms.get(i*6+j+3).getRoomName() %></h3>
+											<h4><%="Online: " + rooms.get(i*6+j+3).membersCount() %></h4>
+											<a href="#">Read More</a>
+										</div>
+									</div>
+							<%	}
+								out.println("</div>");
+								out.println("</li>");
+							} %>
+						</ul>
+				</div>
+				<div align="center">
+					<button type="button" class="btn btn-primary btn-lg"
+							onclick="window.location.href= 'NewRoom?category=<%=cat.getID() %>';">Create new room</button>
 				</div>
 			</section>
 		</div>
@@ -110,7 +119,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="col-sm-4"></div>
 				<div class = "col-sm-4" align="center">
 					<h4> Whoops, no rooms found. </h4> <br>
-					<button type="button" class="btn btn-primary btn-lg" onclick="console.log('here');">Create new room</button>
+					<button type="button" class="btn btn-primary btn-lg" onclick="window.location.href= 'NewRoom?category=<%=cat.getID() %>';">Create new room</button>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>

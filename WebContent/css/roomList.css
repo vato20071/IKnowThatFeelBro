@@ -503,6 +503,9 @@ ul.callbacks_tabs.callbacks2_tabs {
 	font-size:2.1em;
 	font-weight:400;
 }
+.OldButtons {
+	margin-top: 20%
+}
 .buttonRow {
 	margin-top: 10%
 }

@@ -16,6 +16,10 @@ public class Room {
 		chat = new ArrayList<>();
 		invitedUsers = new ArrayList<>();
 	}
+	
+	public int membersCount() {
+		return members.size();
+	}
 
 	public String getRoomName() {
 		return roomName;

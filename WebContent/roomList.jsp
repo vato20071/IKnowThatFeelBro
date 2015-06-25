@@ -44,15 +44,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="header" id="home">
 		<div class="container" align = "center">
 			<div class="logo">
-				<a href="index.jsp"><img src="images/pic09.jpg" alt=""></a>
+				<a href="Settings"> <h3 style="color:white"> <%=acc.getNickName() %> </h3> </a>
 			</div>
-			<ul class="navigcat">
-			</ul>
-<%-- 			<h3 style="color:white"> <%= cat.getName() %></h3> --%>
 			<div class="navigation">
 			 <span class="menu"></span> 
 				<ul class="navig">
-					<li><a href="RoomList?category=<%=cat.getID()%>"><%=cat.getName() %></a></li>
+					<li><a style="color:green" href="RoomList?category=<%=cat.getID()%>"><%=cat.getName() %></a></li>
 					<li><a href="generic.jsp">Home</a><span> </span></li>
 					<li><a href="Settings">Settings</a><span> </span></li>
 					<li><a href="LogOut">Log Out</a><span> </span></li>
@@ -76,8 +73,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<section class="slider">
                 <div class="flexslider">
                     <ul class="slides">
-						<%	System.out.println(rooms.size());
-							for (int i=0; i<Math.ceil(rooms.size()/6.0); i++) {
+						<%	for (int i=0; i<Math.ceil(rooms.size()/6.0); i++) {
 								out.println("<li style=\"display: list-item\">");
 								out.println("<div class=\"banner-top\">");
 								for (int j=0; j<3 && (i*6 + j) < rooms.size() ; j++) { %>

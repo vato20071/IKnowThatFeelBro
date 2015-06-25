@@ -57,8 +57,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<input type="submit" value="Save Updated Info" >
 						</div>
 					</form>
-					<p>
-						<a href="#">Change your password?<span>Click here</span></a>
+					<p> &nbsp;
 					</p>
 				</div>
 		</div>

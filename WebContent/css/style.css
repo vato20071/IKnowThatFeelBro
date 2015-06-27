@@ -711,7 +711,7 @@ input[type="submit"], input[type="reset"], input[type="button"], .button
 	-ms-transition: background-color 0.2s ease-in-out, color 0.2s
 		ease-in-out;
 	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-	background-color: #3ba666;
+	background-color: #2c3e50;
 	border-radius: 4px;
 	border: 0;
 	color: #ffffff !important;
@@ -724,16 +724,17 @@ input[type="submit"], input[type="reset"], input[type="button"], .button
 	text-align: center;
 	text-decoration: none;
 	white-space: nowrap;
+	width: 200px;
 }
 
 input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover,
 	.button:hover {
-	background-color: #42b972;
+	background-color: #454545;
 }
 
 input[type="submit"]:active, input[type="reset"]:active, input[type="button"]:active,
 	.button:active {
-	background-color: #34935a;
+	background-color: #2c3e50;
 }
 
 input[type="submit"].icon, input[type="reset"].icon, input[type="button"].icon,
@@ -829,7 +830,7 @@ body.landing #header {
 	z-index: 10000;
 }
 
-#header h1 {
+#header h4 {
 	color: #ffffff;
 	height: inherit;
 	left: 2.5em;
@@ -840,8 +841,9 @@ body.landing #header {
 	top: 0;
 }
 
-#header h1 a {
+#header h4 a {
 	font-size: 1.25em;
+	color: #CEE8D8;
 }
 
 #header nav {

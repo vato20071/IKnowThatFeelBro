@@ -48,10 +48,14 @@ public class RoomList extends HttpServlet {
                 } else {
                 	cat = categories.get(catName);
                 }
-               
-                ses.setAttribute("account", acc);
-                ses.setAttribute("category", cat);
-                response.sendRedirect("roomList.jsp");
+                if(request.getSession().getAttribute("spectAccountID") != null){
+                	ses.setAttribute("category", cat);
+                	response.sendRedirect("spectRoomList.jsp");
+                } else {                	
+                	ses.setAttribute("account", acc);
+                	ses.setAttribute("category", cat);
+                	response.sendRedirect("roomList.jsp");
+                }
         }
  
         /**

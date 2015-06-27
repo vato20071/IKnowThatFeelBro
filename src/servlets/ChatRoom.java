@@ -52,7 +52,8 @@ public class ChatRoom extends HttpServlet {
         }
         String roomName = request.getParameter("roomID");
         Room current = cat.getRoomList().get(Integer.parseInt(roomName)-1);
-        current.addMember(acc);
+        if(userName != null)
+        	current.addMember(acc);
         session.setAttribute("category", cat);
         session.setAttribute("account", acc);
         session.setAttribute("room", current);

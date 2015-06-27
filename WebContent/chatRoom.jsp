@@ -13,10 +13,16 @@
 <%	Category cat = (Category) session.getAttribute("category");
 	Account acc = (Account) session.getAttribute("account");
 	Room room = (Room) session.getAttribute("room");
-	if (room==null) {
-		response.sendRedirect("generic.jsp");
+	if(session.getAttribute("spectAccountID") != null){
+		if(room == null){
+			response.sendRedirect("index.jsp");
+		}
 	}
+	if (room==null) {
+		response.sendRedirect("index.jsp");
+	} else {
 	%>
+	
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title><%= room.getRoomName() %></title>
 <meta name="description" content="">
@@ -120,13 +126,17 @@
 				<span class="action msg" style="color: undefined">You joined
 					the room <%= room.getRoomName()%></span>
 			</div>
+			<%if(acc != null) { %>
 			<div class="row action_row">
 				<span class="action msg" style="color: rgba(180, 225, 34, 1)"><%=acc.getNickName() %>
 					joined</span>
 			</div>
+			<%} %>
 		</div>
 		<div id="send_message">
+			<%if(acc != null){ %>
 			<input id="message_box" placeholder="Send Message" type="text">
+			<% }%>
 		</div>
 	</div>
 
@@ -197,3 +207,4 @@
 				style="display: none; width: 0px; height: 0px;"></iframe>
 		</body>
 </html>
+<% }%>

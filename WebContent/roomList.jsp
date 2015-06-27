@@ -82,7 +82,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<img src="images/bg.jpg" alt="" />
 											<h3><%=rooms.get(i*6+j).getRoomName() %></h3>
 											<h4><%="Online: " + rooms.get(i*6+j).membersCount() %></h4>
-											<a href="#">Read More</a>
+											<a href="ChatRoom?category=<%=cat.getID() %>&roomID=<%=rooms.get(i*6+j).getRoomID()%>">Enter Room</a>
 										</div>
 									</div>
 							<%	} %>
@@ -94,7 +94,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<img src="images/bg.jpg" alt="" />
 											<h3><%=rooms.get(i*6+j+3).getRoomName() %></h3>
 											<h4><%="Online: " + rooms.get(i*6+j+3).membersCount() %></h4>
-											<a href="#">Read More</a>
+											<a href="ChatRoom?category=<%=cat.getID() %>&roomID=<%=rooms.get(i*6+j+3).getRoomID()%>">Enter Room</a>
 										</div>
 									</div>
 							<%	}

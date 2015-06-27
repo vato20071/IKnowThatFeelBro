@@ -3,9 +3,11 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
+import sun.security.pkcs11.Secmod.DbMode;
+
 public class Room {
 
-	private List<String> members;
+	private List<Account> members;
 	private List<Message> chat;
 	private List<String> invitedUsers;
 	private String roomName;
@@ -37,12 +39,16 @@ public class Room {
 		this.roomID = roomID;
 	}
 	
-	public void addMember(String name) {
+	public void addMember(Account name) {
 		members.add(name);
 	}
 	
-	public void removeMember(String name) {
-		members.remove(name);
+	public void removeMember(Account name) {
+		for (int i=0; i<members.size(); i++) {
+			if (members.get(i).getUserName().equals(name.getUserName())) {
+				members.remove(i);
+			}
+		}
 	}
 	
 	public void addMessage(Message msg) {
@@ -63,6 +69,9 @@ public class Room {
 	
 	public void removeInvitedUser(String user) {
 		invitedUsers.remove(user);
+	}
+	public List<Account> getMemberList() {
+		return members;
 	}
 
 }

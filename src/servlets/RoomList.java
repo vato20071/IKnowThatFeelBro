@@ -44,7 +44,7 @@ public class RoomList extends HttpServlet {
                 if(cat == null) response.sendRedirect("generic.jsp");
                 HashMap<String, Category> categories = serv.getCategoryList();
                 if(!categories.containsKey(catName)) {
-                        categories.put(catName, cat);
+                    categories.put(catName, cat);
                 } else {
                 	cat = categories.get(catName);
                 }

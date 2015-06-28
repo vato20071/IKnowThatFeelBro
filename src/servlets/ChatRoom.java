@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
 
 import core.Account;
 import core.Category;
@@ -52,8 +54,6 @@ public class ChatRoom extends HttpServlet {
         }
         String roomName = request.getParameter("roomID");
         Room current = cat.getRoomList().get(Integer.parseInt(roomName)-1);
-        if(userName != null)
-        	current.addMember(acc);
         session.setAttribute("category", cat);
         session.setAttribute("account", acc);
         session.setAttribute("room", current);

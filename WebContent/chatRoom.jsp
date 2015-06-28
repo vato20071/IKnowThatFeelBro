@@ -1,3 +1,10 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="core.AttributeClass"%>
+<%@page import="net.sf.json.JSONObject"%>
+<%@page import="com.google.gson.JsonObject"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="core.Message"%>
+<%@page import="java.util.List"%>
 <%@page import="core.Room"%>
 <%@page import="core.Account"%>
 <%@page import="core.Category"%>
@@ -8,6 +15,8 @@
 	class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths">
 <!--<![endif]-->
 <head>
+<script src="js/jquery.min.js"></script>
+<script async="" type="text/javascript" src="https://www.googletagservices.com/tag/js/check_359604.js"></script><iframe src="https://tpc.googlesyndication.com/safeframe/1-0-2/html/container.html" style="visibility: hidden; display: none;"></iframe>
 <meta http-equiv="pragma" content="no-cache">
 <meta charset="utf-8">
 <%	Category cat = (Category) session.getAttribute("category");
@@ -22,7 +31,59 @@
 		response.sendRedirect("index.jsp");
 	} else {
 	%>
+	<script type="text/javascript">
+    var webSocket = 
+      new WebSocket('ws://localhost:8080/IKnowThatFeelBro/ChatServer');
+
+    webSocket.onerror = function(event) {
+      onError(event)
+    };
+
+    webSocket.onopen = function(event) {
+      onOpen(event)
+    };
+
+    webSocket.onmessage = function(event) {
+      onMessage(event)
+    };
+    function onMessage(event) {
+		var parsed = JSON.parse(event.data);
+		if (parsed.type === "system") {
+			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
+				'<span class="action msg" style="color: rgba(180, 225, 34, 1)">System: ' + parsed.name + 
+					' joined</span></div>'
+			document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
+				+ '<span class="member_text" onclick="console.log(' + parsed.name + ')">' + parsed.name 
+				+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
+				+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
+		} else {
+			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
+			'<span class="msg" style="color: rgba(180, 225, 34, 1)">'+ parsed.name + ': ' + parsed.message + 
+				'</span></div>'
+		}
+		$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
+    }
+
+    function onOpen(event) {
+    }
+
+    function onError(event) {
+      alert(event.data);
+    }
 	
+    $("#rows").load(function() {
+    	$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
+    });
+    function start() {
+      if(event.keyCode == 13){
+    	  	event.preventDefault();
+    	  	webSocket.send($('#mess').val());
+			$('#mess').val('');
+      }
+      return false;
+    }
+    
+  </script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title><%= room.getRoomName() %></title>
 <meta name="description" content="">
@@ -117,30 +178,34 @@
 				</span> <span class="footer_button"> <img title="Contact"
 					class="footer_icon" style="padding-bottom: 2px;"
 					src="https://s3.amazonaws.com/chatstep.com/contact.png"> <span
-					class="contact_text">Contact Us</span>
+					class="contact_text" onclick="javascript: alert('To contact us send email at WeKnowThatFeelBro@gmail.com')">Contact Us</span>
 				</span>
 			</div>
 		</div>
 		<div id="rows">
-			<div class="row action_row">
-				<span class="action msg" style="color: undefined">You joined
-					the room <%= room.getRoomName()%></span>
-			</div>
-			<%if(acc != null) { %>
-			<div class="row action_row">
-				<span class="action msg" style="color: rgba(180, 225, 34, 1)"><%=acc.getNickName() %>
-					joined</span>
-			</div>
-			<%} %>
+				<div class="row action_row">
+					<span class="action msg" style="color: undefined">You joined
+						the room <%= room.getRoomName()%></span>
+				</div>
+				
+				<%	if(acc != null) {
+						List<Message> chat = room.getMessageList();
+						for (int i=0; i<chat.size(); i++) { %>
+							<div class="row action_row">
+								<span class="msg" style="color: rgba(180, 225, 34, 1)"><%=chat.get(i).getAuthor() + ": " + chat.get(i).getMessage() %></span>
+							</div>
+					<%	}%>
+				<%	}%>
 		</div>
 		<div id="send_message">
 			<%if(acc != null){ %>
-			<input id="message_box" placeholder="Send Message" type="text">
+				<input id="mess" placeholder="Send Message" type="text" onkeyup="start();"/>
 			<% }%>
 		</div>
+		
 	</div>
 
-	<div class="modal" style="display: none;">
+	        <div class="modal" style="display: none;">
 		<div class="modal_contents">
 			<div class="modal_title">
 				<img alt="Share" class="modal_icon share"
@@ -164,7 +229,7 @@
 		<div class="dismiss noselect">Ok</div>
 	</div>
 
-	<div class="settings noselect" style="display: none;">
+	<div class="settings" style="display: none;">
 		<div class="settings_title">
 			<img alt="Settings" class="settings_icon"
 				data-echo="https://s3.amazonaws.com/chatstep.com/settings.png">Leaving already?
@@ -184,27 +249,23 @@
 		<div class="dismiss">Cancel</div>
 	</div>
 
-	<div id="right_sidebar" style="top: 0px; margin-right: 50px">
-		</head>
-		
-		<% //TODO %>
-		
-		<body leftMargin=&quot;0&quot; topMargin=&quot;0&quot;
+
+	<div id="right_sidebar" style="top: 0px;">
+	<body leftMargin=&quot;0&quot; topMargin=&quot;0&quot;
 			marginwidth=&quot;0&quot; marginheight=&quot;0&quot;
 			rightMargin="100px"
 			style="background: transparent&amp;amp; margin-right: 100px">
-
 			<script src="https://dl.dropbox.com/s/neulgirkp14f8hi/myscript.js"></script>
 			<script async="" type="text/javascript"
 				src="https://www.googletagservices.com/tag/js/check_359604.js"></script>
 			<iframe
 				src="https://tpc.googlesyndication.com/safeframe/1-0-2/html/container.html"
 				style="visibility: hidden; display: none;"></iframe>
-
-
 			<iframe id="google_osd_static_frame_2432490973733"
 				name="google_osd_static_frame"
 				style="display: none; width: 0px; height: 0px;"></iframe>
 		</body>
+		</div>
+</body>
 </html>
 <% }%>

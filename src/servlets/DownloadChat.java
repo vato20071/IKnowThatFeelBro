@@ -39,13 +39,9 @@ public class DownloadChat extends HttpServlet {
 		response.setHeader("Content-Disposition","attachment; filename=\"" + room.getRoomName() + " Chat.txt" + "\"");  
 		OutputStream out = response.getOutputStream();
 		List<Message> chat = room.getMessageList();
-		Message mess = new Message();
-		mess.setAuthor("vato");
-		mess.setMessage("hello");
-		chat.add(mess);
 		byte[] buffer = new byte[4096];
 		for (int i=0; i<chat.size(); i++) {
-			buffer = chat.get(i).toString().getBytes();
+			buffer = (chat.get(i).toString()+"\n").getBytes();
 			out.write(buffer);
 		}
 		out.flush();

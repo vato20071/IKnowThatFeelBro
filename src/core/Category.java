@@ -11,12 +11,15 @@ public class Category {
 	
 	public Category() {
 		roomList = new ArrayList<>();
+		for (int i=0; i<8; i++) {
+			addRoom();
+		}
 	}
 	
 	public void addRoom() {
 		Room room = new Room();
 		room.setRoomID(roomList.size() + 1);
-		room.setRoomName("Room_" + room.getRoomID());
+		room.setRoomName("Room " + room.getRoomID());
 		roomList.add(room);
 	}
 	

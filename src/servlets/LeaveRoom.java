@@ -7,18 +7,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import core.Account;
+import core.Category;
+import core.Room;
+import core.Server;
 
 /**
- * Servlet implementation class adminLoggedOut
+ * Servlet implementation class LeaveRoom
  */
-@WebServlet("/adminLoggedOut")
-public class AdminLoggedOut extends HttpServlet {
+@WebServlet("/LeaveRoom")
+public class LeaveRoom extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminLoggedOut() {
+    public LeaveRoom() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,15 +33,21 @@ public class AdminLoggedOut extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("adminPanel.jsp");
-		request.getSession().invalidate();
+		HttpSession session = request.getSession();
+		Room room = (Room) session.getAttribute("room");
+		Category cat = (Category) session.getAttribute("category");
+		Account acc = (Account) session.getAttribute("account");
+		room.removeMember(acc);
+		session.removeAttribute("room");
+		session.removeAttribute("category");
+		session.setAttribute("accountID", acc.getUserName());
+		response.sendRedirect("RoomList?category=" + cat.getID());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 	}
 
 }

@@ -33,8 +33,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			});
 		</script>
 <% 
-	Account acc = (Account) session.getAttribute("account");
-	if(acc == null){
+	System.out.println((String)session.getAttribute("spectAccountID"));
+	if(session.getAttribute("spectAccountID") == null){
 		response.sendRedirect("index.jsp");
 		return;
 	}
@@ -49,15 +49,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="header" id="home">
 		<div class="container" align = "center">
 			<div class="logo">
-				<a href="Settings"> <h3 style="color:white"> <%=acc.getNickName() %> </h3> </a>
+				<a href="Settings"> <h3 style="color:white"> <%=(String)session.getAttribute("name") %> </h3> </a>
 			</div>
 			<div class="navigation">
 			 <span class="menu"></span> 
 				<ul class="navig">
 					<li><a style="color:green" href="RoomList?category=<%=cat.getID()%>"><%=cat.getName() %></a></li>
-					<li><a href="generic.jsp">Home</a><span> </span></li>
-					<li><a href="Settings">Settings</a><span> </span></li>
-					<li><a href="LogOut">Log Out</a><span> </span></li>
+					<li><a href="index.jsp">Home</a><span> </span></li>
+					<li><a href="spectCategories.jsp">Back</a><span> </span></li>
 				</ul>
 			</div>
 				 <!-- script-for-menu -->
@@ -107,10 +106,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								out.println("</li>");
 							} %>
 						</ul>
-				</div>
-				<div align="center">
-					<button type="button" class="btn btn-primary btn-lg"
-							onclick="window.location.href= 'NewRoom?category=<%=cat.getID() %>';">Create new room</button>
 				</div>
 			</section>
 		</div>

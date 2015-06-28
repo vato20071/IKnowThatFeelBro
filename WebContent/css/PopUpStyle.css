@@ -23,7 +23,7 @@ body {font-family: 'Source Sans Pro', sans-serif; font-size: 14px; color: #666;}
 	background: #FFF;
 }
 
-#modal_trigger {margin:100px auto; width:200px; display:block;}
+#modal_trigger {margin:30px auto; width:200px; display:block;}
 
 .btn {padding:10px 20px; background: #F4F4F2;}
 .btn_red {background: #ED6347; color: #FFF;}

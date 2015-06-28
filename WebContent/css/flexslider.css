@@ -29,7 +29,7 @@
 /* Clearfix for the .slides element */
 .slides:after {content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;} 
 html[xmlns] .slides {display: block;} 
-* html .slides {height: 1%;}
+* html .slides {height: 0%;}
 
 /* No JavaScript Fallback */
 /* If you are not using another script, such as Modernizr, make sure you
@@ -48,7 +48,7 @@ html[xmlns] .slides {display: block;}
 }
 .flex-viewport {max-height: 2000px; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; transition: all 1s ease;}
 .loading .flex-viewport {max-height: 300px;}
-.flexslider .slides {zoom: 1;}
+.flexslider .slides {zoom: 0;}
 
 .carousel li {margin-right: 5px}
 

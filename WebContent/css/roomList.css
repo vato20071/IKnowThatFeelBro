@@ -503,6 +503,9 @@ ul.callbacks_tabs.callbacks2_tabs {
 	font-size:2.1em;
 	font-weight:400;
 }
+.OldButtons {
+	margin-top: 20%
+}
 .buttonRow {
 	margin-top: 10%
 }
@@ -1670,6 +1673,10 @@ span.glyphicon {
 .logo {
 	left: 4%;
 	text-align: left;
+}
+.logo h3 {
+	color: white;
+	text-align:left
 }
 #filters li span {
 	font-size: 9px;

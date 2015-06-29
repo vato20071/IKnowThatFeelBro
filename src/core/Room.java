@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Room {
 
+	public static final int MAX_USERS_ALLOWED = 6;
 	private List<Account> members;
 	private List<Message> chat;
 	private List<String> invitedUsers;

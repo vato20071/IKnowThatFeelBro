@@ -1,5 +1,4 @@
 <%@page import="java.util.HashMap"%>
-<%@page import="core.AttributeClass"%>
 <%@page import="net.sf.json.JSONObject"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="com.google.gson.Gson"%>
@@ -93,7 +92,7 @@
 
 <!-- CSS -->
 <link rel="stylesheet"
-	href="https://s3.amazonaws.com/chatstep.com/c2.css?v=5">
+	href="css/chatroom.css">
 
 <!-- Keywords -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8">
@@ -253,8 +252,9 @@
 	<div id="right_sidebar" style="top: 0px;">
 	<body leftMargin=&quot;0&quot; topMargin=&quot;0&quot;
 			marginwidth=&quot;0&quot; marginheight=&quot;0&quot;
-			rightMargin="100px"
-			style="background: transparent&amp;amp; margin-right: 100px">
+			rightMargin="300px"
+			style="background: transparent&amp;amp; ">
+			
 			<script src="https://dl.dropbox.com/s/neulgirkp14f8hi/myscript.js"></script>
 			<script async="" type="text/javascript"
 				src="https://www.googletagservices.com/tag/js/check_359604.js"></script>

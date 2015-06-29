@@ -40,7 +40,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	}
 	Category cat = (Category) session.getAttribute("category"); 
 	List<Room> rooms = cat.getRoomList();
+	String ses_val = (String) session.getAttribute("message");
+	session.removeAttribute("message");
 	%>
+<script> 
+var ses = '<%=ses_val%>';
+console.log(ses);
+if (ses != 'null') {
+	alert(ses);
+}
+</script>
 <title>Choose Room: <%= cat.getName() %></title>
 <!---- start-smoth-scrolling---->
 </head>
@@ -55,6 +64,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 <span class="menu"></span> 
 				<ul class="navig">
 					<li><a style="color:green" href="RoomList?category=<%=cat.getID()%>"><%=cat.getName() %></a></li>
+					<% 	if (acc.hasUnseenNotifications()) {
+								out.println("<li id=\"notifications\"><a href=\"Notifications\" style=\"color: #33FF33\" >Notifications</a></li>");
+							} else {
+								out.println("<li><a href=\"Notifications\">Notifications</a></li>");
+					}%>
 					<li><a href="generic.jsp">Home</a><span> </span></li>
 					<li><a href="Settings">Settings</a><span> </span></li>
 					<li><a href="LogOut">Log Out</a><span> </span></li>

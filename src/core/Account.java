@@ -1,5 +1,6 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,10 +12,12 @@ public class Account {
 	private String userName, password, mail, facebook, nickName, gplus;
 	private double coeffValue;
 	private HashMap<String, List<String> > friendMap;
+	private List<Notification> notifications;
 	private DataBase base;
 	
 	public Account() {
 		friendMap = new HashMap<>();
+		notifications = new ArrayList<>();
 		mail = "";
 		facebook = "";
 		gplus = "";
@@ -28,6 +31,20 @@ public class Account {
 				return true;
 		}
 		return false;
+	}
+	public void addNotification(String notification) {
+		Notification newOne = new Notification();
+		newOne.setMessage(notification);
+		newOne.setSeen(false);
+		notifications.add(newOne);
+	}
+	public boolean hasUnseenNotifications() {
+		if (notifications.size() == 0) return false;
+		if (notifications.get(notifications.size()-1).isSeen()) return false;
+		return true;
+	}
+	public List<Notification> getNotifications() {
+		return notifications;
 	}
 	public String getGplus() {
 		return gplus;

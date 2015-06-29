@@ -54,6 +54,11 @@ public class ChatRoom extends HttpServlet {
         }
         String roomName = request.getParameter("roomID");
         Room current = cat.getRoomList().get(Integer.parseInt(roomName)-1);
+        if (current.getMemberList().size() >= Room.MAX_USERS_ALLOWED) {
+        	session.setAttribute("message", "You can not enter, room is full");
+        	response.sendRedirect("roomList.jsp");
+        	return;
+        }
         session.setAttribute("category", cat);
         session.setAttribute("account", acc);
         session.setAttribute("room", current);

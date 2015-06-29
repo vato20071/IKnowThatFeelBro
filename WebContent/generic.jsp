@@ -38,10 +38,11 @@
 			Server serv = (Server) session.getServletContext().getAttribute("server");
 			DataBase db = serv.getDB();
 			Account cur = db.getAccountByName((String) session.getAttribute("accountID"));
-			HashMap<String, List<String>> friends=cur.getFriendMap();
+			
 			if(cur==null)
 				response.sendRedirect("index.jsp");
 			else{
+				HashMap<String, List<String>> friends=cur.getFriendMap();
 				List<Category> categories=db.getAllCategory();
 		%>
 			<header id="header">
@@ -49,9 +50,9 @@
 				<nav id="nav">
 					<ul>
 						<% 	if (cur.hasUnseenNotifications()) {
-								out.println("<li id=\"notifications\"><a href=\"Notifications\" style=\"color: #33FF33\" >Notifications</a></li>");
+								out.println("<li id=\"notification\"><a href=\"Notifications\" style=\"color: #33FF33\" >Notifications</a></li>");
 							} else {
-								out.println("<li><a href=\"Notifications\">Notifications</a></li>");
+								out.println("<li><a href=\"notification.jsp\">Notifications</a></li>");
 						}%>
 						<li style="color: '#123451'" ><a href="generic.jsp">Home</a></li>
 						<li><a href="Settings">Settings</a></li>

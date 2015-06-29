@@ -878,6 +878,9 @@ body.landing #header {
 	display: inline-block;
 	text-decoration: none;
 }
+#notifications {
+	color: #abcdef
+}
 
 #header nav>ul>li a:hover {
 	color: #ffffff;

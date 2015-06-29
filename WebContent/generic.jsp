@@ -1,3 +1,4 @@
+<%@page import="core.Notification"%>
 <%@page import="core.DataBase"%>
 <%@page import="core.Server"%>
 <%@page import="core.Account"%>
@@ -47,7 +48,12 @@
 				<h1><a href="settings.jsp"><%=cur.getNickName()%></a></h1>
 				<nav id="nav">
 					<ul>
-						<li><a href="generic.jsp">Home</a></li>
+						<% 	if (cur.hasUnseenNotifications()) {
+								out.println("<li id=\"notifications\"><a href=\"Notifications\" style=\"color: #33FF33\" >Notifications</a></li>");
+							} else {
+								out.println("<li><a href=\"Notifications\">Notifications</a></li>");
+						}%>
+						<li style="color: '#123451'" ><a href="generic.jsp">Home</a></li>
 						<li><a href="Settings">Settings</a></li>
 						<li><a href="LogOut">Sign out</a></li>
 					</ul>

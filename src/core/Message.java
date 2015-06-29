@@ -34,7 +34,7 @@ public class Message {
 	
 	@Override
 	public String toString() {
-		return author + ": " + message + "\t" + date.toString(); 
+		return author + ": " + message + "\t" + date.toString() + "\n"; 
 	}
 	
 }

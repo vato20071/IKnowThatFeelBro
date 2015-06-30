@@ -41,27 +41,32 @@ public class Server {
 	}
 	
 	public synchronized void addNewUser(Account newUser){
+		if (dataList.size() == 0) dataList.add(new DataBase());
 		DataBase db = dataList.get(dataList.size()-1);
 		db.insertDataIntoAccount(newUser);
 	}
 	
 	public synchronized void addNewCategory(Category cat){
+		if (dataList.size() == 0) dataList.add(new DataBase());
 		DataBase db = dataList.get(dataList.size()-1);
 		db.insertDataIntoCategories(cat);
 	}
 	
 	public void addFriend(String acc1,String acc2,String catName){
+		if (dataList.size() == 0) dataList.add(new DataBase());
 		DataBase db = dataList.get(dataList.size()-1);
 		db.addFriendShip(acc1, acc2, catName);
 	}
 	
 	public List<String> getFriendsCat(String user,String catName){
+		if (dataList.size() == 0) dataList.add(new DataBase());
 		DataBase db = dataList.get(dataList.size()-1);
 		List<String> friendList = db.getFriendsByCategory(user,catName);
 		return friendList;
 	}
 	
 	public HashMap<String, List<String>> getAllFriends(String user){
+		if (dataList.size() == 0) dataList.add(new DataBase());
 		DataBase db = dataList.get(dataList.size()-1);
 		List<String> categoryList = db.getCategoryList(user);
 		HashMap<String, List<String>> mp = new HashMap<String, List<String>>();
@@ -74,6 +79,10 @@ public class Server {
 	
 	public HashMap<String, Category> getCategoryList() {
 		return categoryList;
+	}
+
+	public List<DataBase> getDataList() {
+		return dataList;
 	}
 	
 }

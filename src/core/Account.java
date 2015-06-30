@@ -61,10 +61,6 @@ public class Account {
 	public void setFriendMap(HashMap<String, List<String>> friendMap) {
 		this.friendMap = friendMap;
 	}
-
-	public void test() {
-		System.out.println("HEre guys ");
-	}
 	
 	public void addFriendShip(String category, String userName) {
 		base.addFriendShip(this.userName, userName, category);

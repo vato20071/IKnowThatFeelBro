@@ -1,0 +1,65 @@
+@CHARSET "ISO-8859-1";
+
+.not-ft{
+	background: #202222;
+	color: #888;
+	position: absolute;
+	top: 130%;
+	height: 230px;
+	width: 100%;
+	
+}
+.notifications{
+	
+	width: 600px;
+	height: 60px;
+	margin-left: 30%;
+	
+}
+.notifications h3{
+	font-size:1.2em;
+	color:#FFF;
+	height: 63px;
+	padding:15px;
+	background:#808080;;
+	text-transform:uppercase;
+	font-family: 'ambleregular';	
+	
+}
+.notifications table{
+	width:600px;
+	margin-top: -22px;
+	
+}
+.notifications td{
+	background: url(../images/strip-bg.gif) repeat-x #F6F6F6;
+}
+.text{
+	height: 45px;
+}
+.text a{
+	display:block;
+	font-size:0.85em;
+	padding:9px 15px;
+    
+   
+   	width: 300px;
+    background:url(../images/drop_arrow.png) no-repeat 0;
+   	
+    text-transform:uppercase;	
+}
+.text h1{
+	font-size:0.65em;
+	font-style: italic;
+	margin-bottom:10px;
+	margin-left: 90%;
+	
+}
+
+.notifications tr{
+	 border: 1px solid #F1F1F1;
+	 height: 60px;
+}
+.notifications tr  :hover{
+	color:#d7cccf;
+}

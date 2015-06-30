@@ -1,5 +1,4 @@
 <%@page import="java.util.HashMap"%>
-<%@page import="net.sf.json.JSONObject"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="core.Message"%>

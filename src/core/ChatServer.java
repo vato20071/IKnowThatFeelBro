@@ -67,6 +67,9 @@ public class ChatServer {
 		HttpSession ses = configs.get(session.getId());
 		Room room = (Room) ses.getAttribute("room");
 		Account acc = (Account) ses.getAttribute("account");
+		if(room.getSpeaker().equals(ses))
+			room.setSpeaker(null);
+
 		Category cat = (Category) ses.getAttribute("category");
 		String uniqueName = cat.getName() + room.getRoomName();
 		HashMap<String, Session> thisMap = (HashMap<String, Session>) map.get(uniqueName);
@@ -82,6 +85,7 @@ public class ChatServer {
 		Room room = (Room) ses.getAttribute("room");
 		Account acc = (Account) ses.getAttribute("account");
 		Category cat = (Category) ses.getAttribute("category");
+		if((room.questions() || room.getSpeaker().equals(ses))&& !room.isBanned(acc)){
 		String uniqueName = cat.getName() + room.getRoomName();
 		Map<String, String> textMap = new HashMap<String, String>();
 		textMap.put("name", acc.getNickName());
@@ -92,5 +96,6 @@ public class ChatServer {
 		room.addMessage(mess);
 		String json = new Gson().toJson(textMap);
 		SendMessages(uniqueName, json);
+		}
 	}
 }

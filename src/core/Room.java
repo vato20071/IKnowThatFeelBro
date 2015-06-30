@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 public class Room {
 
 	public static final int MAX_USERS_ALLOWED = 6;
@@ -14,14 +16,53 @@ public class Room {
 	private String roomName;
 	private int roomID;
 	private Map<Account,Integer> report;
+	private boolean ques;
+	private HttpSession currSpeaker;
+	private HashMap<HttpSession, Integer> users;
+	private List<Account> banList;
+
 	
 	public Room() {
 		members = new ArrayList<>();
 		chat = new ArrayList<>();
 		invitedUsers = new ArrayList<>();
 		report = new HashMap<Account, Integer>();
+		users=new HashMap<HttpSession, Integer>();
+		banList=new ArrayList<Account>();
+		ques=false;
+
 	}
-	
+	public HashMap<HttpSession, Integer> getUsers(){
+		return users;
+	}
+	public void addUser(HttpSession newOne){
+		if(!users.containsKey(newOne))
+			users.put(newOne, 0);
+	}
+	public void addToBanList(Account curr){
+		banList.add(curr);
+	}
+	public boolean isBanned(Account acc){
+		return banList.contains(acc);
+	}
+	public void incrUser(HttpSession curr){
+		if(users.containsKey(curr))
+			users.put(curr, users.get(curr)+1);
+		
+	}
+	public boolean questions(){
+		return ques;
+	}
+	public void setQuestions(boolean status){
+		ques=status;
+	}
+	public HttpSession getSpeaker(){
+		return currSpeaker;
+	}
+	public void setSpeaker(HttpSession curr){
+		currSpeaker=curr;
+	}
+
 	public int membersCount() {
 		return members.size();
 	}

@@ -92,7 +92,7 @@
 
 <!-- CSS -->
 <link rel="stylesheet"
-	href="css/chatroom.css">
+	href="https://dl.dropbox.com/s/tz7tk6d1l13wa6m/chatroom.css">
 
 <!-- Keywords -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8">

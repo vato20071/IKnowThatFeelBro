@@ -35,11 +35,18 @@ public class LeaveRoom extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Room room = (Room) session.getAttribute("room");
+		if(room.getSpeaker().equals(session))
+			room.setSpeaker(null);
+
 		Category cat = (Category) session.getAttribute("category");
 		Account acc = (Account) session.getAttribute("account");
-		room.removeMember(acc);
 		session.removeAttribute("room");
 		session.removeAttribute("category");
+		if (session.getAttribute("spectAccountID") != null) {
+			response.sendRedirect("RoomList?category=" + cat.getID());
+			return;
+		}
+		room.removeMember(acc);
 		session.setAttribute("accountID", acc.getUserName());
 		response.sendRedirect("RoomList?category=" + cat.getID());
 	}

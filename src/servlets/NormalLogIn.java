@@ -63,14 +63,14 @@ public class NormalLogIn extends HttpServlet {
 					request.getSession().setAttribute("accountID", acc.getUserName());
 					response.sendRedirect("generic.jsp");					
 				} else {
-					//TODO: retry
-//					System.out.println("Hash not equal");
+					response.sendRedirect("incorrectInfo.jsp");
 				}
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
 			
 		} else {
+			response.sendRedirect("incorrectInfo.jsp");
 		}
 	}
 }

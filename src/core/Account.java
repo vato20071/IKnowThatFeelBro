@@ -63,7 +63,7 @@ public class Account {
 	}
 	
 	public void addFriendShip(String category, String userName) {
-		base.addFriendShip(this.userName, userName, category);
+		base.addFriendShip(this.getUserName(), userName, category);
 		List<String> friends = friendMap.get(category);
 		if (!friends.contains(userName)) {
 			friends.add(userName);

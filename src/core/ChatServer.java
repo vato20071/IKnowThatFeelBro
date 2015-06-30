@@ -21,6 +21,7 @@ public class ChatServer {
 	static Map<String, HttpSession> configs = new HashMap<>(); 
 	@OnOpen
 	public void onOpen(Session session, EndpointConfig config) throws IOException {
+		System.out.println("opened");
 		HttpSession ses = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
 		Room room = (Room) ses.getAttribute("room");
 		Account acc = (Account) ses.getAttribute("account");
@@ -81,11 +82,13 @@ public class ChatServer {
 	
 	@OnMessage
 	public void onMessage(String message, Session session) throws IOException {
+		System.out.println("onMessage");
 		HttpSession ses = (HttpSession) configs.get(session.getId());
 		Room room = (Room) ses.getAttribute("room");
 		Account acc = (Account) ses.getAttribute("account");
 		Category cat = (Category) ses.getAttribute("category");
-		if((room.questions() || room.getSpeaker().equals(ses))&& !room.isBanned(acc)){
+		System.out.println("banless");
+		if(!room.isBanned(acc)){
 		String uniqueName = cat.getName() + room.getRoomName();
 		Map<String, String> textMap = new HashMap<String, String>();
 		textMap.put("name", acc.getNickName());

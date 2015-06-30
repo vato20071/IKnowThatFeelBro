@@ -165,7 +165,9 @@
 						Account member = room.getMemberList().get(i);
 						%>
 						<div class="member" color="rgba(255,190,50,1)" member="<%= member.getNickName() %>">
-							<span class="member_text" onclick="console.log('<%=member.getNickName()%>')"><%= member.getNickName() %></span><span
+						<a href="makeFriend?fruser=<%=member.getUserName()%>" ><span class="member_text" onclick="console.log('<%=member.getNickName()%>')"><%= member.getNickName() %></span></a>
+							<input type="hidden" id="username" name="username" value=<%=member.getUserName()%>>
+						<span
 								class="typing_indicator"><span class="dotNoAnim"
 								style="background-color: rgba(255, 190, 50, 1)"></span><span
 								class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span>
@@ -184,7 +186,7 @@
 				<span class="footer_button report_button"> <img
 					title="Report" class="footer_icon"
 					src="https://s3.amazonaws.com/chatstep.com/report.png"> <span
-					class="report_text">Report</span>
+					class="report_text">Report</span>		
 				<% } %>
 				</span> <span class="footer_button"> <img title="Contact"
 					class="footer_icon" style="padding-bottom: 2px;"

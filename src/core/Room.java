@@ -1,7 +1,9 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Room {
 
@@ -11,11 +13,13 @@ public class Room {
 	private List<String> invitedUsers;
 	private String roomName;
 	private int roomID;
+	private Map<Account,Integer> report;
 	
 	public Room() {
 		members = new ArrayList<>();
 		chat = new ArrayList<>();
 		invitedUsers = new ArrayList<>();
+		report = new HashMap<Account, Integer>();
 	}
 	
 	public int membersCount() {
@@ -71,6 +75,21 @@ public class Room {
 	}
 	public List<Account> getMemberList() {
 		return members;
+	}
+	
+	public Map<Account,Integer> getReportMap(){
+		return report;
+	}
+	
+	public void addReportToUser(Account acc){
+		String accUserName = acc.getUserName();
+		for(Account key : report.keySet()){
+			if(key.getUserName().equals(accUserName)){
+				int num = report.get(key);
+				report.put(key, num+1);
+				return;
+			}
+		}
 	}
 
 }

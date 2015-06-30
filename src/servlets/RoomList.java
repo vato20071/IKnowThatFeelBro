@@ -51,7 +51,8 @@ public class RoomList extends HttpServlet {
                 if(request.getSession().getAttribute("spectAccountID") != null){
                 	ses.setAttribute("category", cat);
                 	response.sendRedirect("spectRoomList.jsp");
-                } else {                	
+                	return;
+                } else {
                 	ses.setAttribute("account", acc);
                 	ses.setAttribute("category", cat);
                 	response.sendRedirect("roomList.jsp");

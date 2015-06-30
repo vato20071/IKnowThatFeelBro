@@ -179,10 +179,13 @@
 					alt="Settings" class="footer_icon"
 					src="https://s3.amazonaws.com/chatstep.com/settings.png"> <span
 					class="settings_text"> Leave Room </span>
-				</span> <span class="footer_button report_button"> <img
+				</span> 
+				<% if (session.getAttribute("spectAccountID") == null) { %>
+				<span class="footer_button report_button"> <img
 					title="Report" class="footer_icon"
 					src="https://s3.amazonaws.com/chatstep.com/report.png"> <span
 					class="report_text">Report</span>
+				<% } %>
 				</span> <span class="footer_button"> <img title="Contact"
 					class="footer_icon" style="padding-bottom: 2px;"
 					src="https://s3.amazonaws.com/chatstep.com/contact.png"> <span
@@ -221,19 +224,26 @@
 		<div class="dismiss noselect">Cancel</div>
 	</div>
 
+	<% if (session.getAttribute("spectAccountID") == null) { %>
 	<div class="report" style="display: none;">
 		<div class="report_title">
 			<img alt="Report" class="report_icon"
 				data-echo="https://s3.amazonaws.com/chatstep.com/report.png">Report Person
 		</div>
 		<div class="report_contents">
-			If someone is harrasing you, you can report them by clicking their name
-			on the left sidebar and then filling report declaration. <br> <br> If you are reporting links
-			to a website hosting illegal content, please contact administration 
-			directly. <br> <br>
+			If someone is harrasing you, you can report them by ticking next to their names and clicking submit.
+			<form action="reportServlet" method=get>
+				<% for (int i=0; i<room.getMemberList().size(); i++) {
+					Account member = room.getMemberList().get(i);%>
+ 				<input type="checkbox" name=<%=member.getUserName()%> value=<%=member.getNickName()%>> <%=member.getNickName()%><br>
+ 				<% } %>
+ 				<input type="submit" value="Submit">
+</form>
+			 <br> <br>
 		</div>
 		<div class="dismiss noselect">Ok</div>
 	</div>
+		<% } %>
 
 	<div class="settings" style="display: none;">
 		<div class="settings_title">

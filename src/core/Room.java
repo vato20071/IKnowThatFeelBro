@@ -85,6 +85,7 @@ public class Room {
 	
 	public void addMember(Account name) {
 		members.add(name);
+		report.put(name, 0);
 	}
 	
 	public void removeMember(Account name) {

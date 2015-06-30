@@ -67,7 +67,7 @@ if (ses != 'null') {
 					<% 	if (acc.hasUnseenNotifications()) {
 								out.println("<li id=\"notifications\"><a href=\"Notifications\" style=\"color: #33FF33\" >Notifications</a></li>");
 							} else {
-								out.println("<li><a href=\"Notifications\">Notifications</a></li>");
+								out.println("<li><a href=\"notification.jsp\">Notifications</a></li>");
 					}%>
 					<li><a href="generic.jsp">Home</a><span> </span></li>
 					<li><a href="Settings">Settings</a><span> </span></li>

@@ -60,11 +60,12 @@ public class ChatRoom extends HttpServlet {
         	response.sendRedirect("chatRoom.jsp");
         	return;
         }
-        if (current.getMemberList().size() >= Room.MAX_USERS_ALLOWED) {
-        	session.setAttribute("message", "You can not enter, room is full");
+        if (current.getMemberList().size() >= Room.MAX_USERS_ALLOWED || current.isBanned(acc)) {
+        	session.setAttribute("message", "You can not enter, room is full or You are Banned");
         	response.sendRedirect("roomList.jsp");
         	return;
         }
+        current.addUser(session);
         session.setAttribute("category", cat);
         session.setAttribute("account", acc);
         session.setAttribute("room", current);

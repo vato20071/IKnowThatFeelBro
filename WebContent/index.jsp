@@ -56,8 +56,8 @@
 		</h4>
 		<nav id="nav">
 			<ul>
-				<li><a href="learnMore.jsp">Learn More</a></li>
-				<li><a href="contactUs.jsp">Contact Us</a></li>
+				<li><a href="index.jsp">Learn More</a></li>
+				<li><a href="index.jsp">Contact Us</a></li>
 			</ul>
 		</nav>
 	</header>

@@ -20,4 +20,10 @@ public interface DataBaseInterface {
 	public void changeStatus(String username,String value);
 	public void deleteCategory(String catName);
 	public int getTotalAccount();
+	public List<Notification> getNotifications(String userName);
+	void addNotification(String userName, Notification notification);
+	void updateNotification(String userName, Notification notification);
+	void voteForUser(String voter, String receiver);
+	List<String> getAllVotes(String userName);
+	void updateRating(Account user);
 }

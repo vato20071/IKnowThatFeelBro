@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Iterator"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="com.google.gson.Gson"%>
@@ -29,69 +31,6 @@
 		response.sendRedirect("index.jsp");
 	} else {
 	%>
-	<script type="text/javascript">
-    var webSocket = 
-      new WebSocket('ws://localhost:8080/IKnowThatFeelBro/ChatServer');
-
-    webSocket.onerror = function(event) {
-      onError(event)
-    };
-
-    webSocket.onopen = function(event) {
-      onOpen(event)
-    };
-
-    webSocket.onmessage = function(event) {
-      onMessage(event)
-    };
-    function onMessage(event) {
-		var parsed = JSON.parse(event.data);
-		if (parsed.type === "system") {
-			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
-				'<span class="action msg" style="color: rgba(180, 225, 34, 1)">System: ' + parsed.Message + 
-					'</span></div>';
-			if (parsed.left == null) {
-				document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
-					+ '<span class="member_text" onclick="console.log(' + parsed.name + ')">' + parsed.name 
-					+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
-					+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
-			} else {
-				document.getElementById('room_list').innerHTML = '';
-				<% 	for (int i=0; i<room.getMemberList().size(); i++) { %>
-					document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
-						+ '<span class="member_text" onclick="console.log(MemberPage?id='+<%="\'" + room.getMemberList().get(i).getUserName() + "\'"%> +  ')">' + <%="\'" +  room.getMemberList().get(i).getNickName() + "\'"%>
-						+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
-						+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
-				<% } %>
-			}
-		} else {
-			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
-			'<span class="msg" style="color: rgba(180, 225, 34, 1)">'+ parsed.name + ': ' + parsed.message + 
-				'</span></div>'
-		}
-		$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
-    }
-
-    function onOpen(event) {
-    }
-
-    function onError(event) {
-      alert(event.data);
-    }
-	
-    $("#rows").load(function() {
-    	$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
-    });
-    function start() {
-      if(event.keyCode == 13){
-    	  	event.preventDefault();
-    	  	webSocket.send($('#mess').val());
-			$('#mess').val('');
-      }
-      return false;
-    }
-    
-  </script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title><%= room.getRoomName() %></title>
 <meta name="description" content="">
@@ -165,7 +104,9 @@
 						Account member = room.getMemberList().get(i);
 						%>
 						<div class="member" color="rgba(255,190,50,1)" member="<%= member.getNickName() %>">
-							<span class="member_text" onclick="console.log('<%=member.getNickName()%>')"><%= member.getNickName() %></span><span
+						<a href="MemberPage?memberID=<%=member.getUserName()%>" target="_blank"><span class="member_text" onclick="console.log('<%=member.getNickName()%>')"><%= member.getNickName() %></span></a>
+							<input type="hidden" id="username" name="username" value=<%=member.getUserName()%>>
+						<span
 								class="typing_indicator"><span class="dotNoAnim"
 								style="background-color: rgba(255, 190, 50, 1)"></span><span
 								class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span>
@@ -179,10 +120,13 @@
 					alt="Settings" class="footer_icon"
 					src="https://s3.amazonaws.com/chatstep.com/settings.png"> <span
 					class="settings_text"> Leave Room </span>
-				</span> <span class="footer_button report_button"> <img
+				</span> 
+				<% if (session.getAttribute("spectAccountID") == null) { %>
+				<span class="footer_button report_button"> <img
 					title="Report" class="footer_icon"
 					src="https://s3.amazonaws.com/chatstep.com/report.png"> <span
-					class="report_text">Report</span>
+					class="report_text">Report</span>		
+				<% } %>
 				</span> <span class="footer_button"> <img title="Contact"
 					class="footer_icon" style="padding-bottom: 2px;"
 					src="https://s3.amazonaws.com/chatstep.com/contact.png"> <span
@@ -221,19 +165,26 @@
 		<div class="dismiss noselect">Cancel</div>
 	</div>
 
+	<% if (session.getAttribute("spectAccountID") == null) { %>
 	<div class="report" style="display: none;">
 		<div class="report_title">
 			<img alt="Report" class="report_icon"
 				data-echo="https://s3.amazonaws.com/chatstep.com/report.png">Report Person
 		</div>
 		<div class="report_contents">
-			If someone is harrasing you, you can report them by clicking their name
-			on the left sidebar and then filling report declaration. <br> <br> If you are reporting links
-			to a website hosting illegal content, please contact administration 
-			directly. <br> <br>
+			If someone is harrasing you, you can report them by ticking next to their names and clicking submit.
+			<form action="reportServlet" method=get>
+				<% for (int i=0; i<room.getMemberList().size(); i++) {
+					Account member = room.getMemberList().get(i);%>
+ 				<input type="checkbox" name=<%=member.getUserName()%> value=<%=member.getNickName()%>> <%=member.getNickName()%><br>
+ 				<% } %>
+ 				<input type="submit" value="Submit">
+</form>
+			 <br> <br>
 		</div>
 		<div class="dismiss noselect">Ok</div>
 	</div>
+		<% } %>
 
 	<div class="settings" style="display: none;">
 		<div class="settings_title">
@@ -255,13 +206,30 @@
 		<div class="dismiss">Cancel</div>
 	</div>
 
-
 	<div id="right_sidebar" style="top: 0px;">
 	<body leftMargin=&quot;0&quot; topMargin=&quot;0&quot;
 			marginwidth=&quot;0&quot; marginheight=&quot;0&quot;
 			rightMargin="300px"
 			style="background: transparent&amp;amp; ">
-			
+			<div style="color: black"> 
+				<h3> Friends </h3>
+			</div>
+			<div style="color: blue">
+			<%	if (session.getAttribute("spectAccountID") == null) {
+					HashMap<String, List<String> > map = acc.getFriendMap();
+					Iterator<String> it = map.keySet().iterator();
+					List<String> togetherID = (List<String>) session.getAttribute("togetherID");
+					List<String> togetherName = (List<String>) session.getAttribute("togetherName");
+					while(it.hasNext()) {
+						togetherID.addAll(map.get(it.next()));
+					}
+					for (int i=0; i<togetherID.size(); i++) {
+						out.println("<h4><a href=Invite?friendname=" + togetherID.get(i) 
+								+ "&category=" + cat.getName() + "&number=" + room.getRoomID() + ">" + togetherName.get(i) + "</a><br></h4>");
+					}
+				}
+				%>
+			</div>
 			<script src="https://dl.dropbox.com/s/neulgirkp14f8hi/myscript.js"></script>
 			<script async="" type="text/javascript"
 				src="https://www.googletagservices.com/tag/js/check_359604.js"></script>
@@ -273,6 +241,69 @@
 				style="display: none; width: 0px; height: 0px;"></iframe>
 		</body>
 		</div>
+	
+	<script type="text/javascript">
+    var webSocket = 
+      new WebSocket('ws://localhost:8080/IKnowThatFeelBro/ChatServer');
+
+    webSocket.onerror = function(event) {
+      onError(event)
+    };
+
+    webSocket.onopen = function(event) {
+      onOpen(event)
+    };
+
+    webSocket.onmessage = function(event) {
+      onMessage(event)
+    };
+    function onMessage(event) {
+		var parsed = JSON.parse(event.data);
+		if (parsed.type === "system") {
+			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
+				'<span class="action msg" style="color: rgba(180, 225, 34, 1)">System: ' + parsed.Message + 
+					'</span></div>';
+			if (parsed.left == null) {
+				document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
+					+ '<span class="member_text" onclick="console.log(' + parsed.name + ')">' + parsed.name 
+					+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
+					+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
+			} else {
+				document.getElementById('room_list').innerHTML = '';
+				<% 	for (int i=0; i<room.getMemberList().size(); i++) { %>
+					document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
+						+ '<span class="member_text" onclick="console.log(MemberPage?memberID='+<%="\'" + room.getMemberList().get(i).getUserName() + "\'"%> +  ')">' + <%="\'" +  room.getMemberList().get(i).getNickName() + "\'"%>
+						+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
+						+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
+				<% } %>
+			}
+		} else {
+			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
+			'<span class="msg" style="color: rgba(180, 225, 34, 1)">'+ parsed.name + ': ' + parsed.message + 
+				'</span></div>'
+		}
+		$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
+    }
+
+    function onOpen(event) {
+    }
+
+    function onError(event) {
+      alert(event.data);
+    }
+	
+    $("#rows").load(function() {
+    	$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
+    });
+    function start() {
+      if(event.keyCode == 13){
+    	  	webSocket.send($('#mess').val());
+			$('#mess').val('');
+      }
+      return false;
+    }
+    
+  </script>
 </body>
 </html>
 <% }%>

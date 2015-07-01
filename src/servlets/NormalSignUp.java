@@ -49,6 +49,7 @@ public class NormalSignUp extends HttpServlet {
 		DataBase db = serv.getDB();
 		if (db.getAccountByName(name) != null) {
 			System.out.println("Account already registered, please choose the other one");
+			response.sendRedirect("usernameExists.jsp");
 		} else {
 			String nick = request.getParameter("reg_nickname");
 			String password = request.getParameter("reg_pass");

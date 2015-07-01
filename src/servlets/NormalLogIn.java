@@ -52,6 +52,7 @@ public class NormalLogIn extends HttpServlet {
 		String name = request.getParameter("log_user");
 		Account acc = db.getAccountByName(name);
 		if(acc != null) {
+			acc.setFriendMap(db.getAllFriends(name));
 			String offeredPassword = request.getParameter("log_pass");
 			String realPasswordHash = acc.getPassword();
 			MessageDigest m;
@@ -63,14 +64,14 @@ public class NormalLogIn extends HttpServlet {
 					request.getSession().setAttribute("accountID", acc.getUserName());
 					response.sendRedirect("generic.jsp");					
 				} else {
-					//TODO: retry
-//					System.out.println("Hash not equal");
+					response.sendRedirect("incorrectInfo.jsp");
 				}
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
 			
 		} else {
+			response.sendRedirect("incorrectInfo.jsp");
 		}
 	}
 }

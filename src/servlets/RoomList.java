@@ -34,29 +34,32 @@ public class RoomList extends HttpServlet {
          * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
          */
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-                Server serv = (Server)request.getServletContext().getAttribute("server");
-                DataBase db = serv.getDB();
-                HttpSession ses = request.getSession();
-                String userName = (String) ses.getAttribute("accountID");
-                Account acc = db.getAccountByName(userName);
-                String catName = request.getParameter("category");
-                Category cat = db.getCategoryByID(Integer.parseInt(catName));
-                if(cat == null) response.sendRedirect("generic.jsp");
-                HashMap<String, Category> categories = serv.getCategoryList();
-                if(!categories.containsKey(catName)) {
-                    categories.put(catName, cat);
-                } else {
-                	cat = categories.get(catName);
-                }
-                if(request.getSession().getAttribute("spectAccountID") != null){
-                	ses.setAttribute("category", cat);
-                	response.sendRedirect("spectRoomList.jsp");
-                	return;
-                } else {
-                	ses.setAttribute("account", acc);
-                	ses.setAttribute("category", cat);
-                	response.sendRedirect("roomList.jsp");
-                }
+            Server serv = (Server)request.getServletContext().getAttribute("server");
+            DataBase db = serv.getDB();
+            HttpSession ses = request.getSession();
+            String userName = (String) ses.getAttribute("accountID");
+            Account acc = db.getAccountByName(userName);
+            String catName = request.getParameter("category");
+            Category cat = db.getCategoryByID(Integer.parseInt(catName));
+            if(cat == null) response.sendRedirect("generic.jsp");
+            HashMap<String, Category> categories = serv.getCategoryList();
+            if(!categories.containsKey(catName)) {
+                categories.put(catName, cat);
+            } else {
+            	cat = categories.get(catName);
+            }
+            if(request.getSession().getAttribute("spectAccountID") != null){
+            	ses.setAttribute("category", cat);
+            	response.sendRedirect("spectRoomList.jsp");
+            	return;
+            } 	if (acc == null) {
+            		response.sendRedirect("index.jsp");
+            	} else {
+            			acc.setFriendMap(db.getAllFriends(userName));
+		            	ses.setAttribute("account", acc);
+		            	ses.setAttribute("category", cat);
+		            	response.sendRedirect("roomList.jsp");
+            		}
         }
  
         /**

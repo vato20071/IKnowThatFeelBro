@@ -38,15 +38,16 @@
 			Server serv = (Server) session.getServletContext().getAttribute("server");
 			DataBase db = serv.getDB();
 			Account cur = db.getAccountByName((String) session.getAttribute("accountID"));
-			
+			session.setAttribute("account", cur);
 			if(cur==null)
 				response.sendRedirect("index.jsp");
 			else{
+				cur.setFriendMap(db.getAllFriends(cur.getUserName()));
 				HashMap<String, List<String>> friends=cur.getFriendMap();
 				List<Category> categories=db.getAllCategory();
 		%>
-			<header id="header">
-				<h1><a href="settings.jsp"><%=cur.getNickName()%></a></h1>
+			<header id="header" align="left">
+				<h4 style="color:white"> <%=cur.getNickName() %> </h4>
 				<nav id="nav">
 					<ul>
 						<% 	if (cur.hasUnseenNotifications()) {
@@ -132,7 +133,7 @@
 										<h2><%= cat %></h2>
 										<!--<img src="images/heart.png" />-->
 									<ul class="grids-right-info">
-											<li class="user"><%= friendList.get(i) %></li>
+											<li class="user"> <a href="MemberPage?memberID=<%=friendList.get(i)%>"> <%= db.getAccountByName(friendList.get(i)).getNickName() %></a></li>
 											</ul>
 									</div>
 									

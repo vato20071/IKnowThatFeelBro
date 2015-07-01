@@ -13,14 +13,30 @@ public class Account {
 	private double coeffValue;
 	private HashMap<String, List<String> > friendMap;
 	private List<Notification> notifications;
+	private List<String> votedBy;
 	private DataBase base;
 	
 	public Account() {
 		friendMap = new HashMap<>();
 		notifications = new ArrayList<>();
+		votedBy = new ArrayList<>();
 		mail = "";
 		facebook = "";
 		gplus = "";
+		coeffValue = 0;
+		coeffCount = 0;
+	}
+	public void addVote(String user, int value) {
+		if (votedBy.contains(user)) return;
+		coeffCount++;
+		coeffValue = (coeffValue*(coeffCount-1) + value) / coeffCount;
+		votedBy.add(user);
+	}
+	public List<String> getVotedBy() {
+		return votedBy;
+	}
+	public void setVotedBy(List<String> votedBy) {
+		this.votedBy = votedBy;
 	}
 	public boolean containsFriend(String name){
 		Set<String> set = friendMap.keySet();
@@ -30,6 +46,14 @@ public class Account {
 			if(friendList.contains(name))
 				return true;
 		}
+		return false;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (!obj.getClass().equals(this.getClass())) return false;
+		Account other = (Account) obj;
+		if (other.getUserName().equals(this.getUserName())) return true;
 		return false;
 	}
 	public void addNotification(String notification) {
@@ -42,6 +66,9 @@ public class Account {
 		if (notifications.size() == 0) return false;
 		if (notifications.get(notifications.size()-1).isSeen()) return false;
 		return true;
+	}
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
 	}
 	public List<Notification> getNotifications() {
 		return notifications;
@@ -63,7 +90,7 @@ public class Account {
 	}
 	
 	public void addFriendShip(String category, String userName) {
-		base.addFriendShip(this.userName, userName, category);
+		base.addFriendShip(this.getUserName(), userName, category);
 		List<String> friends = friendMap.get(category);
 		if (!friends.contains(userName)) {
 			friends.add(userName);

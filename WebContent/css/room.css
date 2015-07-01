@@ -1,65 +1,4 @@
 @CHARSET "ISO-8859-1";
-body{
-	background: url(../images/bg.jpg) no-repeat 0px 0px;
-	background-size: cover;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	font-family: 'Raleway', sans-serif;
-	margin: 0;
-}
-
-
-.categories{
-	
-	width: 300px;
-	height: 50px;
-	
-}
-.categories h3{
-	font-size:1.2em;
-	color:#FFF;
-	height: 60px;
-	padding:15px;
-	background:#ed6f70;;
-	text-transform:uppercase;
-	font-family: 'ambleregular';	
-	
-}
-.categories table{
-	width:300px;
-	margin-top: -22px;
-	
-}
-.categories td{
-	background: url(../images/strip-bg.gif) repeat-x #F6F6F6;
-}
-.categories tr a{
-	display:block;
-	font-size:0.85em;
-	padding:9px 15px;
-    color: #414243;
-    font-family: 'ambleregular';
-   
-    background:url(../images/drop_arrow.png) no-repeat 0;
-   
-    text-transform:uppercase;	
-}
-
-.categories tr{
-	 border: 1px solid #F1F1F1;
-}
-.categories tr  :hover{
-	color:#d7cccf;
-}
-
-
-
-
-
-
-
-		
 		
 
 .search-box{
@@ -83,7 +22,7 @@ position: absolute;
   left: 0;
   border: none;
   outline: none;
-  background: #892F2F;
+  background: #008080;
   width: 100%;
   height: 82px;
   margin: 0;
@@ -119,7 +58,7 @@ position: absolute;
 
 .sb-icon-search {
 	
-	  background: url('../images/search.png') no-repeat 0 0 #ED6F70 ;
+	  background: url('../images/search.png') no-repeat 0 0 #c0c0c0 ;
 	  position: absolute;
 	  
 		right: 0px;
@@ -140,17 +79,17 @@ position: absolute;
 /****-----start-wrapper-demo----****/
 .wrapper-demo
 {
-	width: 300px;
+	width: 250px;
 	height: 82px;
 	position: absolute;
 	right: 0px;
-	top: 82px;
+	top: 0px;
 }
 /****-----start-wrapper-dropdown-2----****/
 .wrapper-dropdown-2 {
   position: relative;
   padding: 10px 15px 14px 15px;
-  background: #ed6f70;
+  background: #c0c0c0;
   outline: none;
   color: #fff;
   font-size: 1.2em;
@@ -190,7 +129,7 @@ position: absolute;
 	border-bottom:none;
 }
 .dropdown li:hover{
-	color:#ED6F70;
+	color:#808080;
 } 
 .wrapper-dropdown-2 .dropdown  li:last-child{
 	border-bottom-left-radius:5px;
@@ -213,7 +152,7 @@ position: absolute;
 }
 .dropdown {
 	width: 300px;
-	height: 368px;
+	height: 500px;
 	overflow-y: scroll;
 	margin-left: -20px;
 	margin-top: 27px;
@@ -245,9 +184,9 @@ div#dd i img {
   padding: 2% 3% 4% 2%;
   background: #fff;
   
-  margin-left: -20px;
+  margin-left: -40px;
   
-  width:282px;
+  width:230px;
   height:100px;
   border-style: solid;
   border-width: 1px;
@@ -263,6 +202,9 @@ ul.dropdown-1 li img {
 }
 .grids-left {
 	float: left;
+}
+.grids-right a{
+	font-size: 70%;
 }
 .grids-right h2 {
 text-align: center;
@@ -296,6 +238,7 @@ li.user:hover {
 	
 	cursor: pointer;
 }
+
 li.camera:hover {
 	opacity: 0.8;
 }
@@ -332,3 +275,4 @@ p.flowers {
   color: #ed6f70;
   padding: 7% 0 0% 42%;
 }
+		

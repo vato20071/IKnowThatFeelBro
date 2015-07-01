@@ -42,6 +42,7 @@
 			if(cur==null)
 				response.sendRedirect("index.jsp");
 			else{
+				cur.setFriendMap(db.getAllFriends(cur.getUserName()));
 				HashMap<String, List<String>> friends=cur.getFriendMap();
 				List<Category> categories=db.getAllCategory();
 		%>

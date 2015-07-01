@@ -47,18 +47,22 @@ public class reportServlet extends HttpServlet {
 	private void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		System.out.println("daendzra");
 		Room room = (Room) request.getSession().getAttribute("room");
+		Account acc = (Account) request.getSession().getAttribute("account");
 		List<Account> list = room.getMemberList();
 		for(int i=0; i< list.size(); i++){
 			String[] tmp = request.getParameterValues(list.get(i).getUserName());
 			if(tmp != null){
-				room.addReportToUser(list.get(i));
+				room.addReportToUser(list.get(i), acc);
+				System.out.println("report added to " + list.get(i).getNickName());
 			}
 		}
 		Map<Account,Integer> mp = room.getReportMap();
 		int critical = list.size()/2+1;
+		System.out.println("critical: " + critical);
 		for(Account key : mp.keySet()){
 			if(mp.get(key) >= critical){
 				room.addToBanList(key);
+				findAndKillSession(key, room);
 			}
 		}
 		response.sendRedirect("chatRoom.jsp");

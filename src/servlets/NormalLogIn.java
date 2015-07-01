@@ -52,6 +52,7 @@ public class NormalLogIn extends HttpServlet {
 		String name = request.getParameter("log_user");
 		Account acc = db.getAccountByName(name);
 		if(acc != null) {
+			acc.setFriendMap(db.getAllFriends(name));
 			String offeredPassword = request.getParameter("log_pass");
 			String realPasswordHash = acc.getPassword();
 			MessageDigest m;

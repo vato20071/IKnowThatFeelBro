@@ -20,6 +20,7 @@ public class Room {
 	private HttpSession currSpeaker;
 	private HashMap<HttpSession, Integer> users;
 	private List<Account> banList;
+	private HashMap<Account, List<Account> > reportedUsers;
 
 	
 	public Room() {
@@ -27,6 +28,7 @@ public class Room {
 		chat = new ArrayList<>();
 		invitedUsers = new ArrayList<>();
 		report = new HashMap<Account, Integer>();
+		reportedUsers = new HashMap<>();
 		users=new HashMap<HttpSession, Integer>();
 		banList=new ArrayList<Account>();
 		ques=false;
@@ -123,8 +125,17 @@ public class Room {
 		return report;
 	}
 	
-	public void addReportToUser(Account acc){
+	public void addReportToUser(Account acc, Account userReporting){
 		String accUserName = acc.getUserName();
+		if (reportedUsers.containsKey(acc)) {
+			List<Account> reports = reportedUsers.get(acc);
+			if (reports.contains(userReporting)) return;
+			reports.add(userReporting);
+		} else {
+			List<Account> reports = new ArrayList<>();
+			reports.add(userReporting);
+			reportedUsers.put(acc, reports);
+		}
 		for(Account key : report.keySet()){
 			if(key.getUserName().equals(accUserName)){
 				int num = report.get(key);

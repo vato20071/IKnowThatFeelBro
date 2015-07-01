@@ -52,8 +52,10 @@ public class makeFriend extends HttpServlet {
 				tmp.put(catName.getName(), list);
 				acc.setFriendMap(tmp);
 			} 
-			if(!acc.containsFriend(userName))
+			if(!acc.containsFriend(userName)) {
+				System.out.println("friend added");
 				acc.addFriendShip(catName.getName(),userName);
+			}
 		}
 		response.sendRedirect("chatRoom.jsp");
 		return;

@@ -32,6 +32,14 @@ public class Account {
 		}
 		return false;
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (!obj.getClass().equals(this.getClass())) return false;
+		Account other = (Account) obj;
+		if (other.getUserName().equals(this.getUserName())) return true;
+		return false;
+	}
 	public void addNotification(String notification) {
 		Notification newOne = new Notification();
 		newOne.setMessage(notification);

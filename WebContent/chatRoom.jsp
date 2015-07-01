@@ -29,69 +29,6 @@
 		response.sendRedirect("index.jsp");
 	} else {
 	%>
-	<script type="text/javascript">
-    var webSocket = 
-      new WebSocket('ws://localhost:8080/IKnowThatFeelBro/ChatServer');
-
-    webSocket.onerror = function(event) {
-      onError(event)
-    };
-
-    webSocket.onopen = function(event) {
-      onOpen(event)
-    };
-
-    webSocket.onmessage = function(event) {
-      onMessage(event)
-    };
-    function onMessage(event) {
-		var parsed = JSON.parse(event.data);
-		if (parsed.type === "system") {
-			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
-				'<span class="action msg" style="color: rgba(180, 225, 34, 1)">System: ' + parsed.Message + 
-					'</span></div>';
-			if (parsed.left == null) {
-				document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
-					+ '<span class="member_text" onclick="console.log(' + parsed.name + ')">' + parsed.name 
-					+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
-					+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
-			} else {
-				document.getElementById('room_list').innerHTML = '';
-				<% 	for (int i=0; i<room.getMemberList().size(); i++) { %>
-					document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
-						+ '<span class="member_text" onclick="console.log(MemberPage?id='+<%="\'" + room.getMemberList().get(i).getUserName() + "\'"%> +  ')">' + <%="\'" +  room.getMemberList().get(i).getNickName() + "\'"%>
-						+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
-						+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
-				<% } %>
-			}
-		} else {
-			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
-			'<span class="msg" style="color: rgba(180, 225, 34, 1)">'+ parsed.name + ': ' + parsed.message + 
-				'</span></div>'
-		}
-		$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
-    }
-
-    function onOpen(event) {
-    }
-
-    function onError(event) {
-      alert(event.data);
-    }
-	
-    $("#rows").load(function() {
-    	$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
-    });
-    function start() {
-      if(event.keyCode == 13){
-    	  	event.preventDefault();
-    	  	webSocket.send($('#mess').val());
-			$('#mess').val('');
-      }
-      return false;
-    }
-    
-  </script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title><%= room.getRoomName() %></title>
 <meta name="description" content="">
@@ -285,6 +222,69 @@
 				style="display: none; width: 0px; height: 0px;"></iframe>
 		</body>
 		</div>
+	<script type="text/javascript">
+    var webSocket = 
+      new WebSocket('ws://localhost:8080/IKnowThatFeelBro/ChatServer');
+
+    webSocket.onerror = function(event) {
+      onError(event)
+    };
+
+    webSocket.onopen = function(event) {
+      onOpen(event)
+    };
+
+    webSocket.onmessage = function(event) {
+      onMessage(event)
+    };
+    function onMessage(event) {
+		var parsed = JSON.parse(event.data);
+		if (parsed.type === "system") {
+			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
+				'<span class="action msg" style="color: rgba(180, 225, 34, 1)">System: ' + parsed.Message + 
+					'</span></div>';
+			if (parsed.left == null) {
+				document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
+					+ '<span class="member_text" onclick="console.log(' + parsed.name + ')">' + parsed.name 
+					+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
+					+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
+			} else {
+				document.getElementById('room_list').innerHTML = '';
+				<% 	for (int i=0; i<room.getMemberList().size(); i++) { %>
+					document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
+						+ '<span class="member_text" onclick="console.log(makeFriend?fruser='+<%="\'" + room.getMemberList().get(i).getUserName() + "\'"%> +  ')">' + <%="\'" +  room.getMemberList().get(i).getNickName() + "\'"%>
+						+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
+						+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
+				<% } %>
+			}
+		} else {
+			document.getElementById('rows').innerHTML += '<div class="row action_row">' + 
+			'<span class="msg" style="color: rgba(180, 225, 34, 1)">'+ parsed.name + ': ' + parsed.message + 
+				'</span></div>'
+		}
+		$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
+    }
+
+    function onOpen(event) {
+    }
+
+    function onError(event) {
+      alert(event.data);
+    }
+	
+    $("#rows").load(function() {
+    	$("#rows").animate({ scrollTop: $('#rows')[0].scrollHeight}, 1000);
+    });
+    function start() {
+      if(event.keyCode == 13){
+    	  	event.preventDefault();
+    	  	webSocket.send($('#mess').val());
+			$('#mess').val('');
+      }
+      return false;
+    }
+    
+  </script>
 </body>
 </html>
 <% }%>

@@ -5,9 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+
+import com.mysql.fabric.xmlrpc.base.Array;
 
 public class DataBase implements DataBaseInterface{
 
@@ -275,6 +279,21 @@ public class DataBase implements DataBaseInterface{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public HashMap<String, List<String> > getAllFriends(String userName) {
+		List<String> categories = getCategoryList(userName);
+		HashMap<String, List<String> > friendMap = new HashMap<>();
+		for (int i=0; i<categories.size(); i++) {
+			String category = categories.get(i);
+			List<String> friends = getFriendsByCategory(userName, category);
+			List<String> newFriends = new ArrayList<>();
+			for (String friend : friends) {
+				newFriends.add(getAccountByName(friend).getNickName());
+			}
+			friendMap.put(category, newFriends);
+		}
+		return friendMap;
 	}
 
 	@Override

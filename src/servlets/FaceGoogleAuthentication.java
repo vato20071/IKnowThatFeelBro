@@ -63,6 +63,7 @@ public class FaceGoogleAuthentication extends HttpServlet {
 			newOne.setUserName(name);
 			newOne.setNickName(nick);
 			newOne.setPassword(pass);
+			newOne.setFriendMap(db.getAllFriends(name));
 			serv.addNewUser(newOne);
 			request.getSession().setAttribute("accountID", name);
 			response.sendRedirect("generic.jsp");

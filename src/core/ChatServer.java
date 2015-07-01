@@ -34,6 +34,9 @@ public class ChatServer {
 		configs.put(session.getId(), ses);
 		if (roomMap.containsKey(ses.getId())) {
 			roomMap.put(ses.getId(), session);
+			if (ses.getAttribute("spectAccountID") == null) {
+				room.addMember(acc);
+			}
 			return;
 		}
 		roomMap.put(ses.getId(), session);
@@ -66,10 +69,15 @@ public class ChatServer {
 	@OnClose
 	public void onClose(Session session) {
 		HttpSession ses = configs.get(session.getId());
+		try {
+			ses.getCreationTime();
+		} catch(IllegalStateException ex) {
+			return;
+		}
 		Room room = (Room) ses.getAttribute("room");
 		Account acc = (Account) ses.getAttribute("account");
-		if(room.getSpeaker().equals(ses))
-			room.setSpeaker(null);
+//		if(room.getSpeaker().equals(ses))
+//			room.setSpeaker(null);
 
 		Category cat = (Category) ses.getAttribute("category");
 		String uniqueName = cat.getName() + room.getRoomName();
@@ -89,16 +97,16 @@ public class ChatServer {
 		Category cat = (Category) ses.getAttribute("category");
 		System.out.println("banless");
 		if(!room.isBanned(acc)){
-		String uniqueName = cat.getName() + room.getRoomName();
-		Map<String, String> textMap = new HashMap<String, String>();
-		textMap.put("name", acc.getNickName());
-		textMap.put("message", message);
-		Message mess = new Message();
-		mess.setAuthor(acc.getNickName());
-		mess.setMessage(message);
-		room.addMessage(mess);
-		String json = new Gson().toJson(textMap);
-		SendMessages(uniqueName, json);
+			String uniqueName = cat.getName() + room.getRoomName();
+			Map<String, String> textMap = new HashMap<String, String>();
+			textMap.put("name", acc.getNickName());
+			textMap.put("message", message);
+			Message mess = new Message();
+			mess.setAuthor(acc.getNickName());
+			mess.setMessage(message);
+			room.addMessage(mess);
+			String json = new Gson().toJson(textMap);
+			SendMessages(uniqueName, json);
 		}
 	}
 }

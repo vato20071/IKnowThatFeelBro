@@ -42,7 +42,6 @@ public class makeFriend extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Account acc = (Account) request.getSession().getAttribute("account");
 		String userName = request.getParameter("fruser");
-		System.out.println(userName + " " + acc);
 		if(!userName.equals(acc.getUserName())){
 			Category catName = (Category) request.getSession().getAttribute("category");
 			Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
@@ -64,7 +63,11 @@ public class makeFriend extends HttpServlet {
 		}
 		Category cat = (Category) request.getSession().getAttribute("category");
 		Room room = (Room) request.getSession().getAttribute("room");
-		response.sendRedirect("ChatRoom?category=" + cat.getID() + "&roomID=" + room.getRoomID());
+		if (room != null) {
+			response.sendRedirect("ChatRoom?category=" + cat.getID() + "&roomID=" + room.getRoomID());
+		} else {
+			response.sendRedirect("generic.jsp");
+		}
 		return;
 	}
 

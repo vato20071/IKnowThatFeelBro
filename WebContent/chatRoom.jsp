@@ -297,7 +297,6 @@
     });
     function start() {
       if(event.keyCode == 13){
-    	  	event.preventDefault();
     	  	webSocket.send($('#mess').val());
 			$('#mess').val('');
       }

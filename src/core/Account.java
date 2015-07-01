@@ -13,14 +13,30 @@ public class Account {
 	private double coeffValue;
 	private HashMap<String, List<String> > friendMap;
 	private List<Notification> notifications;
+	private List<String> votedBy;
 	private DataBase base;
 	
 	public Account() {
 		friendMap = new HashMap<>();
 		notifications = new ArrayList<>();
+		votedBy = new ArrayList<>();
 		mail = "";
 		facebook = "";
 		gplus = "";
+		coeffValue = 0;
+		coeffCount = 0;
+	}
+	public void addVote(String user, int value) {
+		if (votedBy.contains(user)) return;
+		coeffCount++;
+		coeffValue = (coeffValue*(coeffCount-1) + value) / coeffCount;
+		votedBy.add(user);
+	}
+	public List<String> getVotedBy() {
+		return votedBy;
+	}
+	public void setVotedBy(List<String> votedBy) {
+		this.votedBy = votedBy;
 	}
 	public boolean containsFriend(String name){
 		Set<String> set = friendMap.keySet();
@@ -50,6 +66,9 @@ public class Account {
 		if (notifications.size() == 0) return false;
 		if (notifications.get(notifications.size()-1).isSeen()) return false;
 		return true;
+	}
+	public void setNotifications(List<Notification> notifications) {
+		this.notifications = notifications;
 	}
 	public List<Notification> getNotifications() {
 		return notifications;

@@ -3,9 +3,7 @@ create database if not exists IKnowThatFeelBro;
 
 use IKnowThatFeelBro;
 
-select * from account;
-select * from category;
-update account set `status` = 3 where user_name = 'vato20071';
+
 create table if not exists `account`
 (
 	`ID` int not null auto_increment primary key,
@@ -38,3 +36,19 @@ create table if not exists `friendship`
 	foreign key (`user2_ID`) references `account`(`ID`) on delete cascade,
 	foreign key (`cat_ID`) references `category`(`ID`) on delete cascade
 );
+create table if not exists `notifications` 
+(
+	`ID` int not null auto_increment primary key,
+    `user_ID` int not null,
+    `type` int not null,
+    `date` datetime not null,
+    `message` varchar(300) default '',
+    `seen` boolean default false
+);
+create table if not exists `votes`
+(
+	`ID` int not null auto_increment primary key,
+    `user_ID1` int not null,
+    `user_ID2` int not null
+);
+	

@@ -35,6 +35,8 @@ public class ChatServer {
 		if (roomMap.containsKey(ses.getId())) {
 			roomMap.put(ses.getId(), session);
 			if (ses.getAttribute("spectAccountID") == null) {
+				if (room.getMemberList().contains(acc))
+					room.removeMember(acc);	
 				room.addMember(acc);
 			}
 			return;
@@ -80,6 +82,10 @@ public class ChatServer {
 //			room.setSpeaker(null);
 
 		Category cat = (Category) ses.getAttribute("category");
+		System.out.println(cat + " " + room);
+		if (cat == null || room == null) {
+			return;
+		}
 		String uniqueName = cat.getName() + room.getRoomName();
 		HashMap<String, Session> thisMap = (HashMap<String, Session>) map.get(uniqueName);
 		thisMap.remove(session.getId());

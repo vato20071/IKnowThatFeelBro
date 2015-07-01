@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Iterator"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="com.google.gson.Gson"%>
@@ -102,7 +104,7 @@
 						Account member = room.getMemberList().get(i);
 						%>
 						<div class="member" color="rgba(255,190,50,1)" member="<%= member.getNickName() %>">
-						<a href="makeFriend?fruser=<%=member.getUserName()%>" ><span class="member_text" onclick="console.log('<%=member.getNickName()%>')"><%= member.getNickName() %></span></a>
+						<a href="MemberPage?memberID=<%=member.getUserName()%>" target="_blank"><span class="member_text" onclick="console.log('<%=member.getNickName()%>')"><%= member.getNickName() %></span></a>
 							<input type="hidden" id="username" name="username" value=<%=member.getUserName()%>>
 						<span
 								class="typing_indicator"><span class="dotNoAnim"
@@ -210,7 +212,23 @@
 			marginwidth=&quot;0&quot; marginheight=&quot;0&quot;
 			rightMargin="300px"
 			style="background: transparent&amp;amp; ">
-			
+			<div style="color: black"> 
+				<h3> Friends </h3>
+			</div>
+			<div style="color: blue">
+			<%	HashMap<String, List<String> > map = acc.getFriendMap();
+				Iterator<String> it = map.keySet().iterator();
+				List<String> togetherID = (List<String>) session.getAttribute("togetherID");
+				List<String> togetherName = (List<String>) session.getAttribute("togetherName");
+				while(it.hasNext()) {
+					togetherID.addAll(map.get(it.next()));
+				}
+				for (int i=0; i<togetherID.size(); i++) {
+					out.println("<h4><a href=Invite?friendname=" + togetherID.get(i) 
+							+ "&category=" + cat.getName() + "&number=" + room.getRoomID() + ">" + togetherName.get(i) + "</a><br></h4>");
+				}
+				%>
+			</div>
 			<script src="https://dl.dropbox.com/s/neulgirkp14f8hi/myscript.js"></script>
 			<script async="" type="text/javascript"
 				src="https://www.googletagservices.com/tag/js/check_359604.js"></script>
@@ -252,7 +270,7 @@
 				document.getElementById('room_list').innerHTML = '';
 				<% 	for (int i=0; i<room.getMemberList().size(); i++) { %>
 					document.getElementById('room_list').innerHTML += '<div class="member" color="rgba(255,190,50,1)" member="member">'
-						+ '<span class="member_text" onclick="console.log(makeFriend?fruser='+<%="\'" + room.getMemberList().get(i).getUserName() + "\'"%> +  ')">' + <%="\'" +  room.getMemberList().get(i).getNickName() + "\'"%>
+						+ '<span class="member_text" onclick="console.log(MemberPage?memberID='+<%="\'" + room.getMemberList().get(i).getUserName() + "\'"%> +  ')">' + <%="\'" +  room.getMemberList().get(i).getNickName() + "\'"%>
 						+ '</span><span class="typing_indicator"><span class="dotNoAnim" style="background-color: rgba(255, 190, 50, 1)">'
 						+ '</span><span class="dot" style="background-color: rgba(255, 190, 50, 1)"></span></span> </div>';
 				<% } %>

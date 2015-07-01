@@ -1,6 +1,10 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,7 +70,20 @@ public class ChatRoom extends HttpServlet {
         	return;
         }
         current.addUser(session);
+        HashMap<String, List<String> > map = db.getAllFriends(acc.getUserName());
+        Iterator<String> it = map.keySet().iterator();
+        List<String> togetherID = new ArrayList<>();
+        List<String> togetherName = new ArrayList<>();
+        while (it.hasNext()) {
+        	List<String> curList = map.get(it.next());
+        	for (int i=0; i<curList.size(); i++) {
+        		togetherName.add(db.getAccountByName(curList.get(i)).getNickName());
+        	}
+        	togetherID.addAll(curList);
+        }
         session.setAttribute("category", cat);
+        session.setAttribute("togetherID", togetherID);
+        session.setAttribute("togetherName", togetherName);
         session.setAttribute("account", acc);
         session.setAttribute("room", current);
         response.sendRedirect("chatRoom.jsp");

@@ -1,10 +1,12 @@
 package core;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -287,11 +289,7 @@ public class DataBase implements DataBaseInterface{
 		for (int i=0; i<categories.size(); i++) {
 			String category = categories.get(i);
 			List<String> friends = getFriendsByCategory(userName, category);
-			List<String> newFriends = new ArrayList<>();
-			for (String friend : friends) {
-				newFriends.add(getAccountByName(friend).getNickName());
-			}
-			friendMap.put(category, newFriends);
+			friendMap.put(category, friends);
 		}
 		return friendMap;
 	}
@@ -306,6 +304,21 @@ public class DataBase implements DataBaseInterface{
 				stmt.setString(3, user.getFacebook());
 				stmt.setString(4, user.getGplus());
 				stmt.setString(5, user.getUserName());
+				stmt.execute();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void updateRating(Account user) {
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("update account set coeff_value = ?, coeff_numb = ? "
+					+ "where user_name = ?")) {
+				stmt.setDouble(1, user.getCoeffValue());
+				stmt.setInt(2, user.getCoeffCount());
+				stmt.setString(3, user.getUserName());
 				stmt.execute();
 			}
 		} catch (SQLException e) {
@@ -357,4 +370,98 @@ public class DataBase implements DataBaseInterface{
 		return result;
 	}
 	
+	@Override
+	public List<Notification> getNotifications(String userName) {
+		List<Notification> notifications = new ArrayList<>();
+		Account acc = getAccountByName(userName);
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("SELECT type, message, date, seen FROM notifications where user_ID = ?")) {
+				stmt.setInt(1, acc.getID());
+				try (ResultSet set = stmt.executeQuery()) {
+					while (set.next()) {
+						Notification note = new Notification();
+						note.setType(set.getInt("type"));
+						note.setMessage(set.getString("message"));
+						note.setDate(set.getDate("date"));
+						note.setSeen(set.getBoolean("seen"));
+						notifications.add(note);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return notifications;
+	}
+	
+	@Override
+	public void addNotification(String userName, Notification notification) {
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("INSERT INTO notifications"
+					+ "(user_ID, type, date, message, seen) values"
+					+ "(?, ?, ?, ?, ?)")) {
+				Account acc = getAccountByName(userName);
+				stmt.setInt(1, acc.getID());
+				stmt.setInt(2, notification.getType());
+				Date dt = new Date(notification.getMillis());
+				stmt.setDate(3, dt);
+				stmt.setString(4, notification.getMessage());
+				stmt.setBoolean(5, notification.isSeen());
+				stmt.execute();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void updateNotification(String userName, Notification notification) {
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("Update notifications set seen = true where user_ID = ? and message = ?")) {
+				Account acc = getAccountByName(userName);
+				stmt.setInt(1, acc.getID());
+				stmt.setString(2, notification.getMessage());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void voteForUser(String voterName, String receiverName) {
+		Account voter = getAccountByName(voterName);
+		Account receiver = getAccountByName(receiverName);
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("Insert into votes(user_ID1, user_ID2) values"
+					+ "(?, ?)")) {
+				stmt.setInt(1, voter.getID());
+				stmt.setInt(2, receiver.getID());
+				stmt.execute();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public List<String> getAllVotes(String userName) {
+		Account receiver = getAccountByName(userName);
+		try (Connection conn = ds.getConnection()) {
+			try (PreparedStatement stmt = conn.prepareStatement("Select user_ID1 from votes where user_ID2 = ?")) {
+				stmt.setInt(1, receiver.getID());
+				List<String> users = new ArrayList<>();
+				try (ResultSet set = stmt.executeQuery()) {
+					while (set.next()) {
+						int id = set.getInt("user_ID1");
+						Account acc = getAccountByID(id);
+						users.add(acc.getUserName());
+					}
+				}
+				return users;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

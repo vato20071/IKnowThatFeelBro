@@ -17,6 +17,7 @@ import com.mysql.fabric.xmlrpc.base.Array;
 import core.Account;
 import core.Category;
 import core.DataBase;
+import core.Notification;
 import core.Room;
 import core.Server;
 
@@ -41,6 +42,7 @@ public class makeFriend extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Account acc = (Account) request.getSession().getAttribute("account");
 		String userName = request.getParameter("fruser");
+		System.out.println(userName + " " + acc);
 		if(!userName.equals(acc.getUserName())){
 			Category catName = (Category) request.getSession().getAttribute("category");
 			Server serv = (Server) request.getSession().getServletContext().getAttribute("server");
@@ -53,11 +55,16 @@ public class makeFriend extends HttpServlet {
 				acc.setFriendMap(tmp);
 			} 
 			if(!acc.containsFriend(userName)) {
-				System.out.println("friend added");
+				Notification newOne = new Notification();
+				newOne.setMessage(acc.getNickName() + " added you to his friends");
+				newOne.setType(2);
+				db.addNotification(userName, newOne);
 				acc.addFriendShip(catName.getName(),userName);
 			}
 		}
-		response.sendRedirect("chatRoom.jsp");
+		Category cat = (Category) request.getSession().getAttribute("category");
+		Room room = (Room) request.getSession().getAttribute("room");
+		response.sendRedirect("ChatRoom?category=" + cat.getID() + "&roomID=" + room.getRoomID());
 		return;
 	}
 

@@ -37,10 +37,11 @@
 			if(cur==null)
 				response.sendRedirect("index.jsp");
 			else{
+				cur.setNotifications(db.getNotifications(cur.getUserName()));
 				List<Notification> not=cur.getNotifications();
 		%>
 			<header id="header">
-				<h1><a href="settings.jsp" ><%=cur.getNickName()%></a></h1>
+				<h4><a href="settings.jsp" ><%=cur.getNickName()%></a></h4>
 				<nav id="nav">
 					<ul>
 						
@@ -56,7 +57,8 @@
 					  	   <h3>Notifications</h3>
 						   <table>
 						   
-						   <%for(int i=not.size()-1; i>=0 && i<10; i++){
+						   <%	System.out.println(not.size());
+						   		for(int i=not.size()-1; i>=0 && i<10; i--){
 							   
 							   Notification nt= not.get(i);
 							   
@@ -80,6 +82,7 @@
 		
 		<% for(int i=0; i<not.size(); i++){
 				not.get(i).setSeen(true);	
+				db.updateNotification(cur.getUserName(), not.get(i));
 		}%>
 		
 		

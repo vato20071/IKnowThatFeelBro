@@ -1,29 +1,29 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import core.Message;
-import core.Room;
+import core.Account;
+import core.DataBase;
+import core.Server;
 
 /**
- * Servlet implementation class DownloadChat
+ * Servlet implementation class MemberPage
  */
-@WebServlet("/DownloadChat")
-public class DownloadChat extends HttpServlet {
+@WebServlet("/MemberPage")
+public class MemberPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DownloadChat() {
+    public MemberPage() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,17 +32,14 @@ public class DownloadChat extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("APPLICATION/OCTET-STREAM");   
-		Room room = (Room) request.getSession().getAttribute("room");
-		response.setHeader("Content-Disposition","attachment; filename=\"" + room.getRoomName() + " Chat.txt" + "\"");  
-		OutputStream out = response.getOutputStream();
-		List<Message> chat = room.getMessageList();
-		byte[] buffer = new byte[4096];
-		for (int i=0; i<chat.size(); i++) {
-			buffer = (chat.get(i).toString()+"\n").getBytes();
-			out.write(buffer);
-		}
-		out.flush();
+		Server serv = (Server) request.getServletContext().getAttribute("server");
+		DataBase db = serv.getDB();
+		HttpSession session = request.getSession();
+		String memberID = request.getParameter("memberID");
+		Account member = db.getAccountByName(memberID);
+		member.setVotedBy(db.getAllVotes(member.getUserName()));
+		session.setAttribute("member", member);
+		response.sendRedirect("memberPage.jsp");
 	}
 
 	/**

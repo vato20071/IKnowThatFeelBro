@@ -421,6 +421,7 @@ public class DataBase implements DataBaseInterface{
 				Account acc = getAccountByName(userName);
 				stmt.setInt(1, acc.getID());
 				stmt.setString(2, notification.getMessage());
+				stmt.execute();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

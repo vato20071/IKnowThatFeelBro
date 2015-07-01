@@ -206,7 +206,6 @@
 		<div class="dismiss">Cancel</div>
 	</div>
 
-
 	<div id="right_sidebar" style="top: 0px;">
 	<body leftMargin=&quot;0&quot; topMargin=&quot;0&quot;
 			marginwidth=&quot;0&quot; marginheight=&quot;0&quot;
@@ -216,16 +215,18 @@
 				<h3> Friends </h3>
 			</div>
 			<div style="color: blue">
-			<%	HashMap<String, List<String> > map = acc.getFriendMap();
-				Iterator<String> it = map.keySet().iterator();
-				List<String> togetherID = (List<String>) session.getAttribute("togetherID");
-				List<String> togetherName = (List<String>) session.getAttribute("togetherName");
-				while(it.hasNext()) {
-					togetherID.addAll(map.get(it.next()));
-				}
-				for (int i=0; i<togetherID.size(); i++) {
-					out.println("<h4><a href=Invite?friendname=" + togetherID.get(i) 
-							+ "&category=" + cat.getName() + "&number=" + room.getRoomID() + ">" + togetherName.get(i) + "</a><br></h4>");
+			<%	if (session.getAttribute("spectAccountID") == null) {
+					HashMap<String, List<String> > map = acc.getFriendMap();
+					Iterator<String> it = map.keySet().iterator();
+					List<String> togetherID = (List<String>) session.getAttribute("togetherID");
+					List<String> togetherName = (List<String>) session.getAttribute("togetherName");
+					while(it.hasNext()) {
+						togetherID.addAll(map.get(it.next()));
+					}
+					for (int i=0; i<togetherID.size(); i++) {
+						out.println("<h4><a href=Invite?friendname=" + togetherID.get(i) 
+								+ "&category=" + cat.getName() + "&number=" + room.getRoomID() + ">" + togetherName.get(i) + "</a><br></h4>");
+					}
 				}
 				%>
 			</div>
@@ -240,6 +241,7 @@
 				style="display: none; width: 0px; height: 0px;"></iframe>
 		</body>
 		</div>
+	
 	<script type="text/javascript">
     var webSocket = 
       new WebSocket('ws://localhost:8080/IKnowThatFeelBro/ChatServer');

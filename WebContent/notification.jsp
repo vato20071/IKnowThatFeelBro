@@ -60,7 +60,7 @@
 						   <%	System.out.println(not.size());
 						   		for(int i=not.size()-1; i>=0 && i<10; i--){
 							   
-							   Notification nt= not.get(i);
+							  	Notification nt= not.get(i);
 							   
 							   %>
 						   
